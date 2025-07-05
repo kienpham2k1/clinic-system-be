@@ -1,5 +1,6 @@
 package org.example.patientservice.service.impl;
 
+import lombok.EqualsAndHashCode;
 import org.example.patientservice.dto.request.PatientRequestDto;
 import org.example.patientservice.dto.response.PatientResponseDto;
 import org.example.patientservice.exception.NotFoundException;
@@ -7,17 +8,20 @@ import org.example.patientservice.mapper.PatientMapper;
 import org.example.patientservice.model.sql.PatientEntity;
 import org.example.patientservice.repository.PatientRepository;
 import org.example.patientservice.service.PatientService;
+import org.example.patientservice.service.translate.TranslateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class PatientServiceImpl implements PatientService {
-
+    @Autowired
+    private TranslateService translateService;
     @Autowired
     private PatientRepository patientRepository;
 
@@ -33,7 +37,8 @@ public class PatientServiceImpl implements PatientService {
         Optional<PatientEntity> patientEntity = patientRepository.findById(patientId);
         if (patientEntity.isPresent()) {
             return PatientMapper.INSTANCE.toDtoResponse(patientEntity.get());
-        } else throw new NotFoundException("Not found patient with id " + patientId);
+        }
+        else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }
 
     @Override
@@ -49,7 +54,7 @@ public class PatientServiceImpl implements PatientService {
         if (patientEntity.isPresent()) {
             PatientMapper.INSTANCE.updateEntityFromRequest(patientRequestDto, patientEntity.get());
             return PatientMapper.INSTANCE.toDtoResponse(patientRepository.saveAndFlush(patientEntity.get()));
-        } else throw new NotFoundException("Not found patient with id " + patientId);
+        }    else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }
 
     @Override
@@ -58,6 +63,6 @@ public class PatientServiceImpl implements PatientService {
         if (patientEntity.isPresent()) {
             patientRepository.deleteById(patientId);
             return PatientMapper.INSTANCE.toDtoResponse(patientEntity.get());
-        } else throw new NotFoundException("Not found patient with id " + patientId);
+        }    else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }
 }
