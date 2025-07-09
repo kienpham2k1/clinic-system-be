@@ -7,9 +7,12 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.server.PathContainer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.util.pattern.PathPattern;
+import org.springframework.web.util.pattern.PathPatternParser;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -17,23 +20,44 @@ import java.util.Map;
 
 @Component
 public class JwtAuthFilter implements GlobalFilter, Ordered {
+    private static final PathPatternParser patternParser = new PathPatternParser();
 
-    private static final Map<String, List<String>> PERMISSIONS = Map.of(
-            "/patients/delete", List.of("ADMIN"),
-            "/patients", List.of("ADMIN", "USER")
+    private static final Map<PathPattern, List<HttpMethod>> WHITE_LIST = Map.of(
+            patternParser.parse("/api/v1/auth/**"), List.of(HttpMethod.POST)
     );
+
+    private static final Map<PathPattern, Map<HttpMethod, List<String>>> PERMISSIONS = Map.of(
+            patternParser.parse("/api/v1/patients/**"), Map.of(
+                    HttpMethod.GET, List.of("ADMIN", "USER"),
+                    HttpMethod.POST, List.of("ADMIN")
+            ),
+            patternParser.parse("/api/v1/appointments/**"), Map.of(
+                    HttpMethod.GET, List.of("DOCTOR", "ADMIN"),
+                    HttpMethod.POST, List.of("DOCTOR")
+            )
+    );
+
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
-        if (path.contains("/auth")) {
+        HttpMethod method = exchange.getRequest().getMethod();
+
+        if (WHITE_LIST.entrySet().stream()
+                .anyMatch(entry -> entry.getKey().matches(PathContainer.parsePath(path))
+                        && entry.getValue().contains(method))) {
             return chain.filter(exchange);
         }
 
+        boolean matchedPermission = PERMISSIONS.entrySet().stream()
+                .anyMatch(entry -> entry.getKey().matches(PathContainer.parsePath(path))
+                );
+
+        if (!matchedPermission) {
+            throw new JwtAuthException("Access denied: No permission config for path " + path);
+        }
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-//            return exchange.getResponse().setComplete();
             throw new JwtAuthException("Missing or invalid Authorization header");
         }
 
@@ -43,12 +67,17 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
             String role = claims.get("role", String.class);
             String username = claims.get("username", String.class);
 
-            for (Map.Entry<String, List<String>> entry : PERMISSIONS.entrySet()) {
-                if (path.startsWith(entry.getKey()) && !entry.getValue().contains(role)) {
-                    exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
-                    return exchange.getResponse().setComplete();
-                }
-            }
+            PERMISSIONS.entrySet().stream()
+                    .filter(entry -> entry.getKey().matches(PathContainer.parsePath(path))
+                    )
+                    .findFirst()
+                    .ifPresent(entry -> {
+                        Map<HttpMethod, List<String>> methodRoleMap = entry.getValue();
+                        List<String> allowedRoles = methodRoleMap.get(method);
+                        if (allowedRoles == null || !allowedRoles.contains(role)) {
+                            throw new JwtAuthException("Access denied for " + method + " " + path + " [" + role + "]");
+                        }
+                    });
 
             exchange = exchange.mutate()
                     .request(r -> r.headers(headers -> {
