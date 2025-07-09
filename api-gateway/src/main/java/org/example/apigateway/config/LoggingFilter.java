@@ -12,7 +12,6 @@ import reactor.core.publisher.Mono;
 public class LoggingFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        System.out.println("Request path: " + exchange.getRequest().getURI());
         return chain.filter(exchange);
     }
 

@@ -15,7 +15,7 @@ import java.util.UUID;
 public class JwtUtil {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
     private static final String SECRET = "8b77d7fc7dc4fecb1cbe419e2b0512625e8cf3599fd8b141ec077c7a2e4d0459"; // 64-byte Base64 string
-    private static final long EXPIRATION = 1000 * 60 * 60;
+    private static final long EXPIRATION = 1;
     private final static byte[] keyBytes = java.util.Base64.getDecoder().decode(SECRET);
     private final static SecretKey key = Keys.hmacShaKeyFor(keyBytes);
 
