@@ -1,6 +1,5 @@
 package org.example.patientservice.service.impl;
 
-import lombok.EqualsAndHashCode;
 import org.example.patientservice.dto.request.PatientRequestDto;
 import org.example.patientservice.dto.response.PatientResponseDto;
 import org.example.patientservice.exception.NotFoundException;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 

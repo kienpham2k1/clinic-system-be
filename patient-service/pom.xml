@@ -12,7 +12,7 @@
     <groupId>org.example</groupId>
     <artifactId>patient-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>PatientService</name>
+    <name>patient-service</name>
 
     <properties>
         <java.version>21</java.version>

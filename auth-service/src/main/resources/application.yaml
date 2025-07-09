@@ -1,0 +1,13 @@
+server:
+  port: ${PORT:8090}
+
+spring:
+  application:
+    name: auth-service
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
