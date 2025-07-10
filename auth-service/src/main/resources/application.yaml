@@ -11,3 +11,6 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
+jwt:
+  expiration: 3600000
+  secret: 8b77d7fc7dc4fecb1cbe419e2b0512625e8cf3599fd8b141ec077c7a2e4d0459

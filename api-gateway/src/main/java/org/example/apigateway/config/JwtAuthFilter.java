@@ -2,7 +2,7 @@
 //
 //import io.jsonwebtoken.Claims;
 //import org.example.apigateway.exception.JwtAuthException;
-//import org.example.commonservice.utils.JwtUtil;
+//import org.example.commonservice.commonSecurity.utils.JwtUtil;
 //import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 //import org.springframework.cloud.gateway.filter.GlobalFilter;
 //import org.springframework.core.Ordered;

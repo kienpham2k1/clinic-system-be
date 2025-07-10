@@ -2,12 +2,11 @@ package org.example.apigateway.config;
 
 import io.jsonwebtoken.Claims;
 import org.example.apigateway.exception.JwtAuthException;
-import org.example.commonservice.utils.JwtUtil;
+import org.example.commonservice.commonSecurity.utils.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,8 +15,10 @@ import java.util.Map;
 
 @Component
 public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<JwtAuthGatewayFilterFactory.Config> {
-    public JwtAuthGatewayFilterFactory() {
+    private JwtUtil jwtUtil;
+    public JwtAuthGatewayFilterFactory(JwtUtil jwtUtil) {
         super(Config.class);
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
 
             try {
                 String token = authHeader.substring(7);
-                Claims claims = JwtUtil.validateToken(token);
+                Claims claims = jwtUtil.validateToken(token);
                 String role = claims.get("role", String.class);
 
                 if (!config.isRoleAllowed(method, role)) {

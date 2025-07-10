@@ -4,7 +4,7 @@
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //import lombok.Setter;
-//import org.example.commonservice.utils.JwtUtil;
+//import org.example.commonservice.commonSecurity.utils.JwtUtil;
 //import org.springframework.cloud.gateway.filter.GatewayFilter;
 //import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 //import org.springframework.stereotype.Component;
