@@ -2,7 +2,9 @@ package org.example.apigateway.config;
 
 import io.jsonwebtoken.Claims;
 import org.example.apigateway.exception.JwtAuthException;
-import org.example.commonservice.commonSecurity.utils.JwtUtil;
+import org.example.commonservice.commonSecurity.config.JwtPublicProperties;
+import org.example.commonservice.commonSecurity.utils.JwtPrivateUtil;
+import org.example.commonservice.commonSecurity.utils.JwtPublicUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -15,10 +17,10 @@ import java.util.Map;
 
 @Component
 public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<JwtAuthGatewayFilterFactory.Config> {
-    private JwtUtil jwtUtil;
-    public JwtAuthGatewayFilterFactory(JwtUtil jwtUtil) {
+    private final JwtPublicUtil jwtPublicUtil;
+    public JwtAuthGatewayFilterFactory(JwtPublicUtil jwtPublicUtil) {
         super(Config.class);
-        this.jwtUtil = jwtUtil;
+        this.jwtPublicUtil = jwtPublicUtil;
     }
 
     @Override
@@ -35,7 +37,7 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
 
             try {
                 String token = authHeader.substring(7);
-                Claims claims = jwtUtil.validateToken(token);
+                Claims claims = jwtPublicUtil.validateToken(token);
                 String role = claims.get("role", String.class);
 
                 if (!config.isRoleAllowed(method, role)) {

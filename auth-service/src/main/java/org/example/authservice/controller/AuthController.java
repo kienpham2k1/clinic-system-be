@@ -1,6 +1,6 @@
 package org.example.authservice.controller;
 
-import org.example.commonservice.commonSecurity.utils.JwtUtil;
+import org.example.commonservice.commonSecurity.utils.JwtPrivateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     @Autowired
-    private JwtUtil jwtUtil;
+    private JwtPrivateUtil jwtUtil;
 
     @PostMapping("/login")
     public Map<String, String> login(@RequestBody Map<String, String> credentials) {
@@ -30,7 +30,7 @@ public class AuthController {
         } else {
             throw new RuntimeException("Invalid credentials");
         }
-        String token = jwtUtil.generateToken(claims);
+        String token = jwtUtil.generateToken(claims, null);
         return Map.of("token", token);
     }
 }
