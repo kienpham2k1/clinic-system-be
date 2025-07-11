@@ -19,5 +19,5 @@ public class LoggingFilter implements GlobalFilter, Ordered {
     public int getOrder() {
         return -1; // ưu tiên cao hơn nếu số thấp
     }
-    
+
 }

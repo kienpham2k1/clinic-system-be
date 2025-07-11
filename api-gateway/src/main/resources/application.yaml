@@ -13,6 +13,18 @@ spring:
             locator:
               enabled: true
           routes:
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/api/v1/auth/**
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter:
+                      replenishRate: 50
+                      burstCapacity: 100
+                      requestedTokens: 5
+                      key-resolver: "#{@ipKeyResolver}"
             - id: patient-service
               uri: lb://patient-service
               predicates:
@@ -22,10 +34,24 @@ spring:
                   args:
                     GET: [ ADMIN ]
                     POST: [ ADMIN ]
-            - id: auth-service
-              uri: lb://auth-service
-              predicates:
-                - Path=/api/v1/auth/**
+                - name: RequestRateLimiter
+                  args:
+                    GET: [ ADMIN ]
+                    POST: [ ADMIN ]
+                    redis-rate-limiter:
+                      replenishRate: 50
+                      burstCapacity: 100
+                      requestedTokens: 5
+                      key-resolver: "#{@ipKeyResolver}"
+  data:
+    redis:
+      host: ${REDIS_Host:localhost}
+      port: ${REDIS_PORT:6379}
+
+logging:
+  level:
+    org.springframework.cloud.gateway.filter.ratelimit: DEBUG
+    org.springframework.data.redis: DEBUG
 
 eureka:
   client:
@@ -33,4 +59,4 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
 jwt:
   public:
-    public-key-path: keys/public.pem
+    public-key-path: ${JWT_KEY_PEM_PATH:keys/public.pem }

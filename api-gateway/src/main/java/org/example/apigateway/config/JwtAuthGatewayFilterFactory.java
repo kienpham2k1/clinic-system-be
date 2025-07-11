@@ -2,8 +2,6 @@ package org.example.apigateway.config;
 
 import io.jsonwebtoken.Claims;
 import org.example.apigateway.exception.JwtAuthException;
-import org.example.commonservice.commonSecurity.config.JwtPublicProperties;
-import org.example.commonservice.commonSecurity.utils.JwtPrivateUtil;
 import org.example.commonservice.commonSecurity.utils.JwtPublicUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -18,6 +16,7 @@ import java.util.Map;
 @Component
 public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<JwtAuthGatewayFilterFactory.Config> {
     private final JwtPublicUtil jwtPublicUtil;
+
     public JwtAuthGatewayFilterFactory(JwtPublicUtil jwtPublicUtil) {
         super(Config.class);
         this.jwtPublicUtil = jwtPublicUtil;

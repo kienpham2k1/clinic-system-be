@@ -7,5 +7,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties({JwtPrivateProperties.class, JwtPublicProperties.class})
 @ComponentScan(basePackages = "org.example.commonservice.commonSecurity")
-public class JwtAutoConfiguration  {
+public class JwtAutoConfiguration {
 }

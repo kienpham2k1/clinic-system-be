@@ -35,8 +35,7 @@ public class PatientServiceImpl implements PatientService {
         Optional<PatientEntity> patientEntity = patientRepository.findById(patientId);
         if (patientEntity.isPresent()) {
             return PatientMapper.INSTANCE.toDtoResponse(patientEntity.get());
-        }
-        else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
+        } else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }
 
     @Override
@@ -52,7 +51,7 @@ public class PatientServiceImpl implements PatientService {
         if (patientEntity.isPresent()) {
             PatientMapper.INSTANCE.updateEntityFromRequest(patientRequestDto, patientEntity.get());
             return PatientMapper.INSTANCE.toDtoResponse(patientRepository.saveAndFlush(patientEntity.get()));
-        }    else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
+        } else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }
 
     @Override
@@ -61,6 +60,6 @@ public class PatientServiceImpl implements PatientService {
         if (patientEntity.isPresent()) {
             patientRepository.deleteById(patientId);
             return PatientMapper.INSTANCE.toDtoResponse(patientEntity.get());
-        }    else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
+        } else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }
 }
