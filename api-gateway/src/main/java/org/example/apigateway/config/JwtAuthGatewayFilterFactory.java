@@ -1,25 +1,31 @@
 package org.example.apigateway.config;
 
-import io.jsonwebtoken.Claims;
 import org.example.apigateway.exception.JwtAuthException;
 import org.example.commonservice.commonSecurity.utils.JwtPublicUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<JwtAuthGatewayFilterFactory.Config> {
+    @Value("${jwt.ttl:300000}")
+    private Long ttlJwtTokenRedis;
     private final JwtPublicUtil jwtPublicUtil;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public JwtAuthGatewayFilterFactory(JwtPublicUtil jwtPublicUtil) {
+    public JwtAuthGatewayFilterFactory(JwtPublicUtil jwtPublicUtil, RedisTemplate<String, Object> redisTemplate) {
         super(Config.class);
         this.jwtPublicUtil = jwtPublicUtil;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -28,7 +34,6 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
             String path = exchange.getRequest().getURI().getPath();
             HttpMethod method = exchange.getRequest().getMethod();
             String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
             // Check token
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 throw new JwtAuthException("Missing or invalid Authorization header");
@@ -36,8 +41,14 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
 
             try {
                 String token = authHeader.substring(7);
-                Claims claims = jwtPublicUtil.validateToken(token);
-                String role = claims.get("role", String.class);
+                String redisKey = "auth:token" + token;
+                String role;
+                Map<String, Object> claims = (Map<String, Object>) redisTemplate.opsForValue().get(redisKey);
+                if (claims == null) {
+                    claims = jwtPublicUtil.validateToken(token);
+                    redisTemplate.opsForValue().set(redisKey, claims, Duration.ofMillis(ttlJwtTokenRedis));
+                }
+                role = claims.get("role").toString();
 
                 if (!config.isRoleAllowed(method, role)) {
                     throw new JwtAuthException("Access denied for " + method + " " + path + " [" + role + "]");

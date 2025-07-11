@@ -1,6 +1,6 @@
 package org.example.commonservice.commonSecurity.utils;
 
-import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import org.example.commonservice.commonSecurity.config.JwtPublicProperties;
 import org.slf4j.Logger;
@@ -13,6 +13,7 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.Map;
 
 @Component
 public class JwtPublicUtil {
@@ -23,13 +24,13 @@ public class JwtPublicUtil {
         this.publicKey = loadPublicKey(jwtPublicProperties.getPublicKeyPath());
     }
 
-    public Claims validateToken(String token) {
+    public Map<String, Object> validateToken(String token) {
         return Jwts
                 .parser()
                 .verifyWith(publicKey)
                 .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getPayload();
     }
 
     private PublicKey loadPublicKey(String path) {

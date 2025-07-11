@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
 @Configuration
 public class RateLimiterConfig {
     @Autowired
@@ -38,8 +40,8 @@ public class RateLimiterConfig {
         return exchange -> {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             if (token != null && token.startsWith("Bearer ")) {
-                Claims claims = jwtPublicUtil.validateToken(token.substring(7));
-                return Mono.just(claims.get("username", String.class));
+                Map<String, Object> claims = jwtPublicUtil.validateToken(token.substring(7));
+                return Mono.just(claims.get("username").toString());
             }
             return Mono.just("anonymous");
         };
