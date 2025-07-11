@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Mono;
 
@@ -14,24 +15,25 @@ public class RateLimiterConfig {
     @Autowired
     private JwtPublicUtil jwtPublicUtil;
 
-    @Bean
+    @Bean("ipKeyResolver")
+    @Primary
     public KeyResolver ipKeyResolver() {
         return exchange -> Mono.just(
                 exchange.getRequest().getRemoteAddress().getAddress().getHostAddress()
         );
     }
 
-    @Bean
+    @Bean("routeKeyResolver")
     public KeyResolver routeKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getPath().toString());
     }
 
-    @Bean
+    @Bean("userHeaderKeyResolver")
     public KeyResolver userHeaderKeyResolver() {
         return exchange -> Mono.just(exchange.getRequest().getHeaders().getFirst("X-User-Id"));
     }
 
-    @Bean
+    @Bean("userKeyResolver")
     public KeyResolver userKeyResolver() {
         return exchange -> {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
