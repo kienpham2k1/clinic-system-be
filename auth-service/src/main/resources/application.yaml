@@ -15,3 +15,8 @@ jwt:
   private:
     expiration: 86400000
     private-key-path: keys/private.pem
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
