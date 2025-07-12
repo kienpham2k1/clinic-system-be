@@ -1,6 +1,7 @@
 server:
   port: ${PORT:8080}
 
+
 spring:
   application:
     name: api-gateway
@@ -72,22 +73,6 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
 
-logging:
-  level:
-    org:springframework:
-      cloud:
-        gateway:
-          filter:
-            ratelimit: DEBUG
-    org:
-      springframework:
-        cloud:
-          gateway:
-            filter:
-              factory:
-                RetryGatewayFilterFactory: DEBUG
-        data:
-          redis: debug
 
 eureka:
   client:
@@ -111,3 +96,45 @@ springdoc:
     deep-linking: true
   api-docs:
     path: /v3/api-docs
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0  # 100% trace để test
+    exporter:
+      zipkin:
+        enabled: true
+        endpoint: http://localhost:9411/api/v2/spans  # Zipkin endpoint
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    # === Gateway core: để biết route nào được chọn ===
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: DEBUG
+
+    # === Gateway filter: log các filter xử lý request ===
+    org.springframework.cloud.gateway.filter: DEBUG
+
+    # === CircuitBreaker, Retry, RateLimit (nếu dùng) ===
+    org.springframework.cloud.gateway.filter.factory.CircuitBreakerGatewayFilterFactory: DEBUG
+    org.springframework.cloud.gateway.filter.factory.RetryGatewayFilterFactory: DEBUG
+    org.springframework.cloud.gateway.filter.ratelimit: DEBUG
+
+    # === Micrometer observation & tracing ===
+    io.micrometer.tracing: DEBUG
+    io.micrometer.observation: DEBUG
+
+    # === Gateway Observation Filters (tự tạo span) ===
+    org.springframework.cloud.gateway.observation: DEBUG
+    org.springframework.cloud.gateway.observation.ObservedRequestHttpHeadersFilter: DEBUG
+
+    # === Redis (nếu dùng để store rate/quota/token...) ===
+    org.springframework.data.redis: DEBUG
+
+    # === WebClient (nếu gọi downstream service) ===
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
+

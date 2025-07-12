@@ -12,10 +12,16 @@ services:
 
   redisinsight:
     image: redis/redisinsight:latest
-    container_name: redisinsight
+    container_name: redis-insight
     ports:
       - "8001:8001"
     restart: unless-stopped
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin-gateway
+    ports:
+      - "9411:9411"
+    restart: unless-stopped
 volumes:
   redis-data:
