@@ -41,20 +41,53 @@ spring:
                       burstCapacity: 100
                       requestedTokens: 5
                     key-resolver: "#{@ipKeyResolver}"
+                - name: Retry
+                  args:
+                    retries: 3
+                    statuses: BAD_GATEWAY
+                    methods: GET, POST
+                    backoff:
+                      firstBackoff: 10ms
+                      maxBackoff: 50ms
+                      factor: 2
+                      basedOnPreviousValue: false
+                    timeout: 100ms
                 - name: CircuitBreaker
                   args:
-                    name: patientCircuit
+                    name: patientCircuitBreaker
                     fallbackUri: forward:/fallback/patients
-
   data:
     redis:
       host: ${REDIS_Host:localhost}
       port: ${REDIS_PORT:6379}
 
+# Config Resilience4j
+resilience4j:
+  circuitbreaker:
+    instances:
+      patientCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 3
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+
 logging:
   level:
-    org.springframework.cloud.gateway.filter.ratelimit: DEBUG
-    org.springframework.data.redis: DEBUG
+    org:springframework:
+      cloud:
+        gateway:
+          filter:
+            ratelimit: DEBUG
+    org:
+      springframework:
+        cloud:
+          gateway:
+            filter:
+              factory:
+                RetryGatewayFilterFactory: DEBUG
+        data:
+          redis: debug
 
 eureka:
   client:
