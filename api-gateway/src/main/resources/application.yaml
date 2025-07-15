@@ -73,7 +73,6 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
 
-
 eureka:
   client:
     service-url:
