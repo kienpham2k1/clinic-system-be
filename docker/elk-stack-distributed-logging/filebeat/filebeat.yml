@@ -1,0 +1,23 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /usr/share/filebeat/logs/api-gateway/*.log
+    json.keys_under_root: true
+    json.add_error_key: true
+    fields:
+      service: api-gateway
+      env: production
+
+  - type: log
+    enabled: true
+    paths:
+      - /usr/share/filebeat/logs/patient-service/*.log
+    json.keys_under_root: true
+    json.add_error_key: true
+    fields:
+      service: patient-service
+      env: production
+
+output.logstash:
+  hosts: ["logstash:5044"]

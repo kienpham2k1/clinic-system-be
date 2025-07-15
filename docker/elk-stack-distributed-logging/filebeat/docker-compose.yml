@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.12.2
+    container_name: filebeat
+    user: root
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:rw
+      - ./logs:/usr/share/filebeat/logs:ro        # Mount log dir tùy theo service
+      - /var/lib/filebeat:/usr/share/filebeat/data
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - default
+    restart: unless-stopped
+
+networks:
+  default:
