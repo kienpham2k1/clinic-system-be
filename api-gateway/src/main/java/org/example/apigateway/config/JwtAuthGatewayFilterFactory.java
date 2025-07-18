@@ -2,6 +2,7 @@ package org.example.apigateway.config;
 
 import org.example.apigateway.exception.JwtAuthException;
 import org.example.commonservice.commonSecurity.utils.JwtPublicUtil;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -36,6 +37,7 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
             String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             // Check token
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                MDC.put("userid", "anonymous");
                 throw new JwtAuthException("Missing or invalid Authorization header");
             }
 
@@ -43,10 +45,13 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
                 String token = authHeader.substring(7);
                 String redisKey = "auth:token" + token;
                 String role;
+                String userId;
                 Map<String, Object> claims = (Map<String, Object>) redisTemplate.opsForValue().get(redisKey);
                 if (claims == null) {
                     claims = jwtPublicUtil.validateToken(token);
                     redisTemplate.opsForValue().set(redisKey, claims, Duration.ofMillis(ttlJwtTokenRedis));
+                    userId = "kienpt32";
+                    MDC.put("userid", userId);
                 }
                 role = claims.get("role").toString();
 

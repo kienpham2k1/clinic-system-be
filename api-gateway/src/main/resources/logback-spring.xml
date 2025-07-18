@@ -2,7 +2,7 @@
     <property name="SERVICE" value="api-gateway"/>
     <property name="LOG_PATH" value="./docker/elk-stack-distributed-logging/filebeat/logs/${SERVICE}"/>
     <property name="LOG_PATTERN"
-              value="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level  --- [%X{spring.application.name}] [%thread] [%X{user}] [%X{traceId}-%X{spanId}] %logger{36} : %msg%n"/>
+              value="%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level  --- [%X{spring.application.name}] [%thread] [%X{userid}] [%X{traceId}-%X{spanId}] %logger{36} : %msg%n"/>
 
     <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -12,7 +12,7 @@
 
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <pattern>${LOG_PATTERN}</pattern>
-            <customFields>{"service":"${SERVICE}"}</customFields>
+<!--            <customFields>{"service":"${SERVICE}"}</customFields>-->
         </encoder>
     </appender>
 
