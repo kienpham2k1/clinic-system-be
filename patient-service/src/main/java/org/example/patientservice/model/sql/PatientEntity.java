@@ -1,8 +1,11 @@
 package org.example.patientservice.model.sql;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.patientservice.model.base.BaseEntity;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -12,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
-public class PatientEntity {
+public class PatientEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -21,8 +24,16 @@ public class PatientEntity {
     private Integer age;
     private String email;
     private String phone;
-    private String address;
+    private String address1;
+    private String address2;
+    private LocalDate birthDate;
+//    @Nullable
+//    private GenderEnum gender;
+//    @Nullable
+//    private BloodGroupEnum bloodGroupEnum;
+    private String country;
     private String city;
     private String state;
     private String zip;
+    private String profileImage;
 }
