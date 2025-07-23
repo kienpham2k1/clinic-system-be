@@ -1,6 +1,5 @@
 package org.example.apigateway.config;
 
-import io.jsonwebtoken.Claims;
 import org.example.commonservice.commonSecurity.utils.JwtPublicUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;

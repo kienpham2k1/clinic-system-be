@@ -1,6 +1,5 @@
 package org.example.commonservice.commonSecurity.utils;
 
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import org.example.commonservice.commonSecurity.config.JwtPublicProperties;
 import org.slf4j.Logger;
