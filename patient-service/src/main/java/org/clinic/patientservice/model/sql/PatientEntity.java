@@ -2,7 +2,7 @@ package org.clinic.patientservice.model.sql;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.clinic.commonserviceweb.commonAudit.entity.BaseEntity;
+import org.clinic.commonserviceweb.entity.sql.BaseEntity;
 
 import java.time.LocalDate;
 import java.util.UUID;

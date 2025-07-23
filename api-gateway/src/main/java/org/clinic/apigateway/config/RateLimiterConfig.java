@@ -1,6 +1,6 @@
 package org.clinic.apigateway.config;
 
-import org.clinic.commonserviceweb.commonSecurity.utils.JwtPublicUtil;
+import org.clinic.commonserviceweb.security.utils.JwtPublicUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;

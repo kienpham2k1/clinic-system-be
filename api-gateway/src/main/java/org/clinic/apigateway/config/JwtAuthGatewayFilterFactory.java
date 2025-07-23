@@ -1,7 +1,7 @@
 package org.clinic.apigateway.config;
 
 import org.clinic.apigateway.exception.JwtAuthException;
-import org.clinic.commonserviceweb.commonSecurity.utils.JwtPublicUtil;
+import org.clinic.commonserviceweb.security.utils.JwtPublicUtil;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
