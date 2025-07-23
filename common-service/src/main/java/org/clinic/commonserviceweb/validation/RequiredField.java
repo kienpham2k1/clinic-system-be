@@ -1,4 +1,4 @@
-package org.clinic.patientservice.validation;
+package org.clinic.commonserviceweb.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
