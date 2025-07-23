@@ -78,7 +78,7 @@
         </dependency>
         <dependency>
             <groupId>org.clinic-system</groupId>
-            <artifactId>common-service</artifactId>
+            <artifactId>common-service-web-reactive</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!-- Redis reactive client -->
