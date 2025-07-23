@@ -26,7 +26,7 @@ public class PatientEntity extends BaseEntity {
     private String address1;
     private String address2;
     private LocalDate birthDate;
-//    @Nullable
+    //    @Nullable
 //    private GenderEnum gender;
 //    @Nullable
 //    private BloodGroupEnum bloodGroupEnum;

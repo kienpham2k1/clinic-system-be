@@ -11,6 +11,7 @@ public class BaseResponse<T> {
     private String status;
     private String message;
     private T data;
+
     public static <T> BaseResponse<T> success(T data) {
         BaseResponse<T> res = new BaseResponse<>();
         res.setStatus("SUCCESS");

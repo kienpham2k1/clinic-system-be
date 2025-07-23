@@ -12,7 +12,7 @@
 
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <pattern>${LOG_PATTERN}</pattern>
-<!--            <customFields>{"service":"${SERVICE}"}</customFields>-->
+            <!--            <customFields>{"service":"${SERVICE}"}</customFields>-->
         </encoder>
     </appender>
 

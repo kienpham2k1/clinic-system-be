@@ -18,10 +18,10 @@ import java.util.Map;
 
 @Component
 public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<JwtAuthGatewayFilterFactory.Config> {
-    @Value("${jwt.ttl:300000}")
-    private Long ttlJwtTokenRedis;
     private final JwtPublicUtil jwtPublicUtil;
     private final RedisTemplate<String, Object> redisTemplate;
+    @Value("${jwt.ttl:300000}")
+    private Long ttlJwtTokenRedis;
 
     public JwtAuthGatewayFilterFactory(JwtPublicUtil jwtPublicUtil, RedisTemplate<String, Object> redisTemplate) {
         super(Config.class);

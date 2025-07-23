@@ -11,7 +11,15 @@ public class UserContext {
         this.role = role;
     }
 
-    public String getUserId() { return userId; }
-    public String getUsername() { return username; }
-    public String getRole() { return role; }
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getRole() {
+        return role;
+    }
 }

@@ -1,7 +1,6 @@
 package org.clinic.commonserviceweb.wrapper;
 
 import org.clinic.commonserviceweb.dto.BaseResponse;
-import org.clinic.commonserviceweb.dto.ResponseStatus;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

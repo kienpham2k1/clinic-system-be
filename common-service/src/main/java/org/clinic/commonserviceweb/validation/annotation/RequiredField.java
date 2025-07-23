@@ -1,7 +1,8 @@
-package org.clinic.commonserviceweb.validation;
+package org.clinic.commonserviceweb.validation.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import org.clinic.commonserviceweb.validation.validator.RequiredFieldValidator;
 
 import java.lang.annotation.*;
 
