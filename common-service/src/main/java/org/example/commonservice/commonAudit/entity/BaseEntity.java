@@ -1,4 +1,5 @@
-package org.example.patientservice.model.base;
+package org.example.commonservice.commonAudit.entity;
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;

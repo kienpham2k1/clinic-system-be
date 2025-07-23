@@ -3,7 +3,8 @@ package org.example.patientservice.model.sql;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.patientservice.model.base.BaseEntity;
+//import org.example.patientservice.model.base.BaseEntity;
+import org.example.commonservice.commonAudit.entity.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
