@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.dto;
+package org.clinic.commonserviceweb.localeTimeZone.dto;
 
 import java.util.Locale;
 import java.util.TimeZone;

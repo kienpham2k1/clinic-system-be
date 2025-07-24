@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.dto.error;
+package org.clinic.commonserviceweb.exception.dto.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -17,6 +17,6 @@ public class ErrorResponseEntity {
     @JsonInclude(value = Include.NON_NULL)
     private Map<String, String> validationErrors;
     private String path;
-    @lombok.Builder.Default
+    @Builder.Default
     private LocalDateTime timestamp = LocalDateTime.now();
 }

@@ -1,7 +1,7 @@
-package org.clinic.commonserviceweb.config.advice;
+package org.clinic.commonserviceweb.exception.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.clinic.commonserviceweb.dto.error.ErrorResponseEntity;
+import org.clinic.commonserviceweb.exception.dto.error.ErrorResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

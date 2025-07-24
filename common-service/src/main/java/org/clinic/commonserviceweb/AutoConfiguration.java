@@ -8,16 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties({JwtPrivateProperties.class, JwtPublicProperties.class})
-@ComponentScan(basePackages = {"org.clinic.commonserviceweb.utils",
-        "org.clinic.commonserviceweb.service",
-        "org.clinic.commonserviceweb.wrapper",
-        "org.clinic.commonserviceweb.config.context",
-        "org.clinic.commonserviceweb.config.advice",
-        "org.clinic.commonserviceweb.config.messagge",
-        "org.clinic.commonserviceweb.security.service",
-        "org.clinic.commonserviceweb.security.config",
-        "org.clinic.commonserviceweb.security.aspect",
-        "org.clinic.commonserviceweb.security.anotation",
+@ComponentScan(basePackages = {"org.clinic.commonserviceweb"
 })
 public class AutoConfiguration {
 }

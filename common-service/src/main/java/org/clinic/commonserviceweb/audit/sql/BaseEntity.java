@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.entity.sql;
+package org.clinic.commonserviceweb.audit.sql;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

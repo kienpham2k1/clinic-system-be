@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.dto;
+package org.clinic.commonserviceweb.wrapper.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
