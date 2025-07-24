@@ -30,8 +30,10 @@ public class LocaleTimezoneFilter implements Filter {
 
         LocaleTimeZoneContext ltzContext = new LocaleTimeZoneContext(locale, tz);
         TimeZoneContextHolder.setTimeZone(ltzContext);
-
-        chain.doFilter(request, response);
-
+        try {
+            chain.doFilter(request, response);
+        } finally {
+            TimeZoneContextHolder.clear();
+        }
     }
 }
