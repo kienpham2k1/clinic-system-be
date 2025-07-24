@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = {"org.clinic.commonserviceweb.utils",
         "org.clinic.commonserviceweb.service",
         "org.clinic.commonserviceweb.wrapper",
-        "org.clinic.commonserviceweb.config.advice"})
+        "org.clinic.commonserviceweb.config.context",
+        "org.clinic.commonserviceweb.config.advice",
+        "org.clinic.commonserviceweb.config.messagge"
+})
 public class AutoConfiguration {
 }

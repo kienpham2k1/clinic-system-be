@@ -1,4 +1,4 @@
-package org.clinic.patientservice.config;
+package org.clinic.commonserviceweb.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

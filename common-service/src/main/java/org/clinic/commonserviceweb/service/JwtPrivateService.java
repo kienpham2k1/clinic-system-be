@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.utils;
+package org.clinic.commonserviceweb.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,12 +17,12 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class JwtPrivateUtil {
-    private static final Logger logger = LoggerFactory.getLogger(JwtPrivateUtil.class);
+public class JwtPrivateService {
+    private static final Logger logger = LoggerFactory.getLogger(JwtPrivateService.class);
     private final PrivateKey privateKey;
     private final long expiration;
 
-    public JwtPrivateUtil(JwtPrivateProperties props) {
+    public JwtPrivateService(JwtPrivateProperties props) {
         this.expiration = props.getExpiration();
         this.privateKey = loadPrivateKey(props.getPrivateKeyPath());
     }

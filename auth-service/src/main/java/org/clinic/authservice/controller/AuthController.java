@@ -1,6 +1,6 @@
 package org.clinic.authservice.controller;
 
-import org.clinic.commonserviceweb.utils.JwtPrivateUtil;
+import org.clinic.commonserviceweb.service.JwtPrivateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     @Autowired
-    private JwtPrivateUtil jwtUtil;
+    private JwtPrivateService jwtUtil;
 
     @PostMapping("/login")
     public Map<String, String> login(@RequestBody Map<String, String> credentials) {

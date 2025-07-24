@@ -1,13 +1,13 @@
 package org.clinic.patientservice.service.impl;
 
 import org.clinic.commonserviceweb.exception.NotFoundException;
+import org.clinic.commonserviceweb.service.MessageService;
 import org.clinic.patientservice.dto.request.PatientRequestDto;
 import org.clinic.patientservice.dto.response.PatientResponseDto;
 import org.clinic.patientservice.mapper.PatientMapper;
 import org.clinic.patientservice.model.sql.PatientEntity;
 import org.clinic.patientservice.repository.PatientRepository;
 import org.clinic.patientservice.service.PatientService;
-import org.clinic.patientservice.service.translate.TranslateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Service
 public class PatientServiceImpl implements PatientService {
     @Autowired
-    private TranslateService translateService;
+    private MessageService translateService;
     @Autowired
     private PatientRepository patientRepository;
 

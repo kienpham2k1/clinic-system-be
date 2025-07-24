@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.utils;
+package org.clinic.commonserviceweb.service;
 
 import io.jsonwebtoken.Jwts;
 import org.clinic.commonserviceweb.config.jwt.JwtPublicProperties;
@@ -15,11 +15,11 @@ import java.util.Base64;
 import java.util.Map;
 
 @Component
-public class JwtPublicUtil {
-    private static final Logger logger = LoggerFactory.getLogger(JwtPrivateUtil.class);
+public class JwtPublicService {
+    private static final Logger logger = LoggerFactory.getLogger(JwtPrivateService.class);
     private final PublicKey publicKey;
 
-    public JwtPublicUtil(JwtPublicProperties jwtPublicProperties) {
+    public JwtPublicService(JwtPublicProperties jwtPublicProperties) {
         this.publicKey = loadPublicKey(jwtPublicProperties.getPublicKeyPath());
     }
 
