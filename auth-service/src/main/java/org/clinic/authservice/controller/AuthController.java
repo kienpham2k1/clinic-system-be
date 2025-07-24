@@ -1,6 +1,6 @@
 package org.clinic.authservice.controller;
 
-import org.clinic.commonserviceweb.service.JwtPrivateService;
+import org.clinic.commonserviceweb.security.service.JwtPrivateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

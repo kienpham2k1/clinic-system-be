@@ -1,7 +1,7 @@
-package org.clinic.commonserviceweb.service;
+package org.clinic.commonserviceweb.security.service;
 
 import io.jsonwebtoken.Jwts;
-import org.clinic.commonserviceweb.config.jwt.JwtPublicProperties;
+import org.clinic.commonserviceweb.security.jwt.JwtPublicProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;

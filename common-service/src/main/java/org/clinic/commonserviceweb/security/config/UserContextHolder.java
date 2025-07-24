@@ -1,6 +1,6 @@
-package org.clinic.commonserviceweb.config.context;
+package org.clinic.commonserviceweb.security.config;
 
-import org.clinic.commonserviceweb.dto.UserContext;
+import org.clinic.commonserviceweb.security.dto.UserContext;
 
 public class UserContextHolder {
     private static final ThreadLocal<UserContext> userContextHolder = new ThreadLocal<>();
