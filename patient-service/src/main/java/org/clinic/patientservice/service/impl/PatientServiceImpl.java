@@ -58,7 +58,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientResponseDto deletePatient(UUID patientId) {
         Optional<PatientEntity> patientEntity = patientRepository.findById(patientId);
         if (patientEntity.isPresent()) {
-            patientRepository.deleteById(patientId);
+            patientRepository.delete(patientEntity.get());
             return PatientMapper.INSTANCE.toDtoResponse(patientEntity.get());
         } else throw new NotFoundException(translateService.translate("patient.not-found", new Object[]{patientId}));
     }

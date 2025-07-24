@@ -2,10 +2,7 @@ package org.clinic.commonserviceweb.entity.sql;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
@@ -40,6 +37,11 @@ public abstract class BaseEntity {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
+
+    @PreRemove
+    public void preventPhysicalDelete() {
+        this.isDeleted = true;
+    }
 
     @Column(name = "status")
     private Boolean status = false;

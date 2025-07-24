@@ -3,6 +3,8 @@ package org.clinic.patientservice.model.sql;
 import jakarta.persistence.*;
 import lombok.*;
 import org.clinic.commonserviceweb.entity.sql.BaseEntity;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -14,6 +16,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@SQLDelete(sql = "UPDATE patient SET is_deleted = true WHERE id = ? AND version = ?")
+@Where(clause = "is_deleted = false")
 public class PatientEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
