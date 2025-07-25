@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.localeTimeZone.dto.config.messagge;
+package org.clinic.commonserviceweb.localeTimeZone.config.messagge;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

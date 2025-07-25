@@ -27,15 +27,8 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
-    @Autowired
-    ApplicationContext ctx;
 
-    @PostConstruct
-    public void logBeans() {
-        Arrays.stream(ctx.getBeanDefinitionNames()).forEach(System.out::println);
-    }
     @GetMapping
-    @RequirePermission(Permission.PATIENT_READ)
     public ResponseEntity<Page<PatientResponseDto>> getPatientsPage(
             @RequestParam(name = "pageNo", defaultValue = PageConstant.PAGE_START) int pageNo,
             @RequestParam(name = "pageSize", defaultValue = PageConstant.PAGE_SIZE) int pageSize,

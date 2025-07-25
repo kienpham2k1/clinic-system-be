@@ -1,6 +1,6 @@
-package org.clinic.commonserviceweb.localeTimeZone.dto.config.context;
+package org.clinic.commonserviceweb.localeTimeZone.config.context;
 
-import org.clinic.commonserviceweb.localeTimeZone.dto.LocaleTimeZoneContext;
+import org.clinic.commonserviceweb.localeTimeZone.LocaleTimeZoneContext;
 
 public class TimeZoneContextHolder {
     private static ThreadLocal<LocaleTimeZoneContext> timeZoneContextHolder = new ThreadLocal<LocaleTimeZoneContext>();

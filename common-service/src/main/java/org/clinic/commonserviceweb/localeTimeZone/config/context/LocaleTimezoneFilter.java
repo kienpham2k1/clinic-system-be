@@ -1,8 +1,8 @@
-package org.clinic.commonserviceweb.localeTimeZone.dto.config.context;
+package org.clinic.commonserviceweb.localeTimeZone.config.context;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.clinic.commonserviceweb.localeTimeZone.dto.LocaleTimeZoneContext;
+import org.clinic.commonserviceweb.localeTimeZone.LocaleTimeZoneContext;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 

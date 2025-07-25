@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.localeTimeZone.dto.service;
+package org.clinic.commonserviceweb.localeTimeZone.service;
 
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
