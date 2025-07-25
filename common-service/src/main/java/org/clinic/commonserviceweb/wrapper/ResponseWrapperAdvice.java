@@ -24,6 +24,12 @@ public class ResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request,
                                   ServerHttpResponse response) {
+        // ⛔️ Không wrap nếu là Swagger/OpenAPI
+        String path = request.getURI().getPath();
+        if (path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")) {
+            return body;
+        }
+
         if (response instanceof ServletServerHttpResponse servletResponse) {
             int status = servletResponse.getServletResponse().getStatus();
 

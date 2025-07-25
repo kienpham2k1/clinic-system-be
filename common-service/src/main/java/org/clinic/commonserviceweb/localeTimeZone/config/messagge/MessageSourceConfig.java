@@ -13,12 +13,6 @@ public class MessageSourceConfig {
         messageSource.setBasename("classpath:i18n/messages");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
-
-//        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-//        messageSource.setBasename("i18n/messages"); // ứng với messages_*.properties
-//        messageSource.setDefaultEncoding("UTF-8");
-//        messageSource.setUseCodeAsDefaultMessage(true);
-//        return messageSource;
     }
 
 }

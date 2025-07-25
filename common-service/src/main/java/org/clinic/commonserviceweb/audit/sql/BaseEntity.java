@@ -37,14 +37,13 @@ public abstract class BaseEntity {
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = false;
+    @Column(name = "status")
+    private Boolean status = false;
+    @Version
+    private Long version;
 
     @PreRemove
     public void preventPhysicalDelete() {
         this.isDeleted = true;
     }
-
-    @Column(name = "status")
-    private Boolean status = false;
-    @Version
-    private Long version;
 }

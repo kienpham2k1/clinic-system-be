@@ -1,7 +1,7 @@
 package org.clinic.commonserviceweb.security.service;
 
-import org.clinic.commonserviceweb.security.enums.Permission;
 import org.clinic.commonserviceweb.security.dto.UserContext;
+import org.clinic.commonserviceweb.security.enums.Permission;
 
 import java.util.Optional;
 import java.util.Set;

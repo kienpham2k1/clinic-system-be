@@ -1,15 +1,11 @@
 package org.clinic.patientservice.controller;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
-import org.clinic.commonserviceweb.security.anotation.RequirePermission;
-import org.clinic.commonserviceweb.security.enums.Permission;
 import org.clinic.patientservice.constant.PageConstant;
 import org.clinic.patientservice.dto.request.PatientRequestDto;
 import org.clinic.patientservice.dto.response.PatientResponseDto;
 import org.clinic.patientservice.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 
