@@ -3,6 +3,7 @@ package org.clinic.commonserviceweb.security.service;
 import org.clinic.commonserviceweb.security.config.UserContextHolder;
 import org.clinic.commonserviceweb.security.dto.UserContext;
 import org.clinic.commonserviceweb.security.enums.Permission;
+import org.clinic.commonserviceweb.security.enums.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -28,8 +29,8 @@ public class UserContextProviderImpl implements UserContextProvider {
         return getCurrentUser().map(UserContext::getUsername).orElse("unknown");
     }
 
-    public String getRole() {
-        return getCurrentUser().map(UserContext::getRole).orElse("GUEST");
+    public Set<Role> getRole() {
+        return getCurrentUser().map(UserContext::getRole).orElse(Collections.emptySet());
     }
 
     @Override
