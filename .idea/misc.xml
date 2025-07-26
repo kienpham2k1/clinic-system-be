@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/common-service-web-reactive/pom.xml" />
         <option value="$PROJECT_DIR$/common-security/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/doctor-service/pom.xml" />
       </list>
     </option>
   </component>
