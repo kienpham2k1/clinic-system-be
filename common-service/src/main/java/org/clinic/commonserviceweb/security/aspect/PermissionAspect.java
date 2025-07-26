@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.clinic.common_security.security.enums.Permission;
 import org.clinic.commonserviceweb.exception.AccessDeniedException;
 import org.clinic.commonserviceweb.security.anotation.RequirePermission;
 import org.clinic.commonserviceweb.security.dto.UserContext;
-import org.clinic.commonserviceweb.security.enums.Permission;
 import org.clinic.commonserviceweb.security.service.UserContextProvider;
 import org.springframework.stereotype.Component;
 

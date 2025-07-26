@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.security.enums;
+package org.clinic.common_security.security.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

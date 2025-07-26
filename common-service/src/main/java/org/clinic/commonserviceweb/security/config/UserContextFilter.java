@@ -8,19 +8,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.clinic.common_security.security.config.RulesConfig;
+import org.clinic.common_security.security.dto.RequestPermissions;
+import org.clinic.common_security.security.enums.Permission;
+import org.clinic.common_security.security.enums.Role;
 import org.clinic.commonserviceweb.exception.AccessDeniedException;
 import org.clinic.commonserviceweb.exception.dto.error.ErrorResponseEntity;
-import org.clinic.commonserviceweb.security.dto.RequestPermissions;
 import org.clinic.commonserviceweb.security.dto.UserContext;
-import org.clinic.commonserviceweb.security.enums.Permission;
-import org.clinic.commonserviceweb.security.enums.Role;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.PathContainer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.pattern.PathPattern;
-import org.springframework.web.util.pattern.PathPatternParser;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -32,20 +31,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserContextFilter extends OncePerRequestFilter {
-    private static final PathPatternParser patternParser = new PathPatternParser();
-
-    private static final Set<PathPattern> WHITE_LIST = Set.of(
-            patternParser.parse("/api/v1/auth/**")
-    );
-
-
-    private static final Map<PathPattern, RequestPermissions> RULES = Map.of(
-            patternParser.parse("/api/v1/patients/**"),
-            new RequestPermissions(
-                    Set.of(Role.PATIENT),
-                    Map.of(HttpMethod.GET, Set.of(Permission.ADMIN_READ))
-            )
-    );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -85,7 +70,7 @@ public class UserContextFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         HttpMethod method = HttpMethod.valueOf(request.getMethod());
 
-        if (WHITE_LIST.stream()
+        if (RulesConfig.WHITE_LIST.stream()
                 .anyMatch(entry ->
                         entry.matches(PathContainer.parsePath(path)))) {
             filterChain.doFilter(request, response);
@@ -109,7 +94,7 @@ public class UserContextFilter extends OncePerRequestFilter {
                 .map(Permission::valueOf)
                 .collect(Collectors.toSet());
 
-        RULES.entrySet().stream()
+        RulesConfig.RULES.entrySet().stream()
                 .filter(entry ->
                         entry.getKey().matches(PathContainer.parsePath(path)))
                 .findFirst()
@@ -117,11 +102,11 @@ public class UserContextFilter extends OncePerRequestFilter {
                     boolean accessDenied = true;
                     RequestPermissions requestPermissions = entry.getValue();
                     if (!roles.isEmpty()) {
-                        Set<Role> allowedRoles = requestPermissions.getRoles();
+                        Set<Role> allowedRoles = requestPermissions.roles();
                         accessDenied = roles.stream().noneMatch(allowedRoles::contains);
                     }
                     if (!permissions.isEmpty()) {
-                        Map<HttpMethod, Set<Permission>> allowedPermission = requestPermissions.getAuthorities();
+                        Map<HttpMethod, Set<Permission>> allowedPermission = requestPermissions.authorities();
                         Set<Permission> allowedPermissionSet = allowedPermission.get(method);
                         accessDenied = permissions.stream().noneMatch(allowedPermissionSet::contains);
                     }

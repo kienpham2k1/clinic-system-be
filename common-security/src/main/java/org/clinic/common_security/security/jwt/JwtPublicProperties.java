@@ -1,4 +1,4 @@
-package org.clinic.commonserviceweb.security.jwt;
+package org.clinic.common_security.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

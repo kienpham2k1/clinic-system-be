@@ -1,6 +1,6 @@
 package org.clinic.commonserviceweb.security.anotation;
 
-import org.clinic.commonserviceweb.security.enums.Permission;
+import org.clinic.common_security.security.enums.Permission;
 
 import java.lang.annotation.*;
 

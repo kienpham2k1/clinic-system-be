@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/common-service/demo/pom.xml" />
         <option value="$PROJECT_DIR$/common-service-webreactive/pom.xml" />
         <option value="$PROJECT_DIR$/common-service-web-reactive/pom.xml" />
+        <option value="$PROJECT_DIR$/common-security/pom.xml" />
       </list>
     </option>
   </component>

@@ -1,9 +1,9 @@
 package org.clinic.commonserviceweb.security.service;
 
+import org.clinic.common_security.security.enums.Permission;
+import org.clinic.common_security.security.enums.Role;
 import org.clinic.commonserviceweb.security.config.UserContextHolder;
 import org.clinic.commonserviceweb.security.dto.UserContext;
-import org.clinic.commonserviceweb.security.enums.Permission;
-import org.clinic.commonserviceweb.security.enums.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;

@@ -1,7 +1,7 @@
-package org.clinic.commonserviceweb.security.service;
+package org.clinic.common_security.security.service;
 
 import io.jsonwebtoken.Jwts;
-import org.clinic.commonserviceweb.security.jwt.JwtPublicProperties;
+import org.clinic.common_security.security.jwt.JwtPublicProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -28,7 +28,7 @@ public class JwtPublicService {
                 .parser()
                 .verifyWith(publicKey)
                 .build()
-                .parseClaimsJws(token)
+                .parseSignedClaims(token)
                 .getPayload();
     }
 

@@ -1,6 +1,8 @@
 package org.clinic.authservice.controller;
 
-import org.clinic.commonserviceweb.security.service.JwtPrivateService;
+import org.clinic.common_security.security.enums.Permission;
+import org.clinic.common_security.security.enums.Role;
+import org.clinic.common_security.security.service.JwtPrivateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -26,7 +29,8 @@ public class AuthController {
         // Giả lập: nếu user là admin
         if ("admin".equals(username) && "123456".equals(password)) {
             claims.put("username", username);
-            claims.put("role", "ADMIN");
+            claims.put("role", Set.of(Role.ADMIN, Role.DOCTOR));
+            claims.put("Permission", Permission.ADMIN_READ);
         } else if ("user".equals(username) && "123456".equals(password)) {
             claims.put("username", username);
             claims.put("role", "USER");

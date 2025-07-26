@@ -1,8 +1,7 @@
-package org.clinic.commonserviceweb.security.service;
+package org.clinic.common_security.security.service;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.clinic.commonserviceweb.security.jwt.JwtPrivateProperties;
+import org.clinic.common_security.security.jwt.JwtPrivateProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -33,7 +32,7 @@ public class JwtPrivateService {
                 .subject(subject)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(privateKey, SignatureAlgorithm.RS256)
+                .signWith(privateKey)
                 .compact();
     }
 
