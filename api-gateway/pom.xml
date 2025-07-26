@@ -76,11 +76,18 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.clinic-system</groupId>-->
+        <!--            <artifactId>common-service-web-reactive</artifactId>-->
+        <!--            <version>0.0.1-SNAPSHOT</version>-->
+        <!--        </dependency>-->
+
         <dependency>
-            <groupId>org.clinic-system</groupId>
-            <artifactId>common-service-web-reactive</artifactId>
+            <groupId>org.clinic</groupId>
+            <artifactId>common-security</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!-- Redis reactive client -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

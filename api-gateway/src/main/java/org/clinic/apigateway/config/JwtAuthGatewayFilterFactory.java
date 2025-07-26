@@ -1,7 +1,9 @@
 package org.clinic.apigateway.config;
 
 import org.clinic.apigateway.exception.JwtAuthException;
-import org.clinic.commonserviceweb.security.utils.JwtPublicUtil;
+import org.clinic.common_security.security.enums.Permission;
+import org.clinic.common_security.security.enums.Role;
+import org.clinic.common_security.security.service.JwtPublicService;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -9,23 +11,27 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<JwtAuthGatewayFilterFactory.Config> {
-    private final JwtPublicUtil jwtPublicUtil;
+    private final JwtPublicService jwtPublicService;
     private final RedisTemplate<String, Object> redisTemplate;
     @Value("${jwt.ttl:300000}")
     private Long ttlJwtTokenRedis;
 
-    public JwtAuthGatewayFilterFactory(JwtPublicUtil jwtPublicUtil, RedisTemplate<String, Object> redisTemplate) {
+    public JwtAuthGatewayFilterFactory(JwtPublicService jwtPublicService, RedisTemplate<String, Object> redisTemplate) {
         super(Config.class);
-        this.jwtPublicUtil = jwtPublicUtil;
+        this.jwtPublicService = jwtPublicService;
         this.redisTemplate = redisTemplate;
     }
 
@@ -44,22 +50,51 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
             try {
                 String token = authHeader.substring(7);
                 String redisKey = "auth:token" + token;
-                String role;
                 String userId;
+                String username = "anonymous";
+                boolean accessDenied = true;
                 Map<String, Object> claims = (Map<String, Object>) redisTemplate.opsForValue().get(redisKey);
                 if (claims == null) {
-                    claims = jwtPublicUtil.validateToken(token);
+                    claims = jwtPublicService.parseClaimsFromToken(token);
                     redisTemplate.opsForValue().set(redisKey, claims, Duration.ofMillis(ttlJwtTokenRedis));
-                    userId = "kienpt32";
+                    userId = claims.get("userId").toString();
                     MDC.put("userid", userId);
-                }
-                role = claims.get("role").toString();
-
-                if (!config.isRoleAllowed(method, role)) {
-                    throw new JwtAuthException("Access denied for " + method + " " + path + " [" + role + "]");
+                } else {
+                    userId = "anonymous";
                 }
 
-                return chain.filter(exchange);
+                Set<Role> roles = jwtPublicService.getRoles(claims);
+                Set<Permission> permissions = jwtPublicService.getPermissions(claims);
+
+                if (!roles.isEmpty()) {
+                    accessDenied = config.isRoleAllowed(roles);
+                }
+                if (!permissions.isEmpty()) {
+                    accessDenied = config.isPermissionAllowed(permissions, method);
+                }
+                if (accessDenied) {
+                    throw new JwtAuthException("Access denied for " + method + " " + path);
+                }
+
+                ServerHttpRequest request = exchange.getRequest()
+                        .mutate()
+                        .headers(httpHeaders -> {
+                            httpHeaders.set("X-USER-ID", userId);
+                            httpHeaders.set("X-USERNAME", username);
+                            httpHeaders.set("X-ROLE", roles.stream()
+                                    .map(Enum::name) // chuyển enum về String
+                                    .collect(Collectors.joining(",")));
+                            httpHeaders.set("X-PERMISSIONS", permissions.stream()
+                                    .map(Enum::name) // chuyển enum về String
+                                    .collect(Collectors.joining(",")));
+                        })
+                        .build();
+
+                ServerWebExchange mutatedExchange = exchange
+                        .mutate()
+                        .request(request)
+                        .build();
+                return chain.filter(mutatedExchange);
             } catch (Exception e) {
                 throw new JwtAuthException("Invalid JWT token: " + e.getMessage());
             }
@@ -74,29 +109,49 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
     public static class Config {
         private final Map<String, List<String>> methodRoles = new HashMap<>();
 
-        public void setGET(List<String> roles) {
-            methodRoles.put("GET", roles);
+        public void setROLE(List<String> roles) {
+            methodRoles.put("ROLE", roles);
         }
 
-        public void setPOST(List<String> roles) {
-            methodRoles.put("POST", roles);
+        public void setGET(List<String> permissions) {
+            methodRoles.put("GET", permissions);
         }
 
-        public void setPUT(List<String> roles) {
-            methodRoles.put("PUT", roles);
+        public void setPOST(List<String> permissions) {
+            methodRoles.put("POST", permissions);
         }
 
-        public void setDELETE(List<String> roles) {
-            methodRoles.put("DELETE", roles);
+        public void setPUT(List<String> permissions) {
+            methodRoles.put("PUT", permissions);
         }
 
-        public List<String> getAllowedRoles(HttpMethod method) {
+        public void setDELETE(List<String> permissions) {
+            methodRoles.put("DELETE", permissions);
+        }
+
+        public List<String> getAllowedAuthorize(HttpMethod method) {
             return methodRoles.get(method.name());
         }
 
-        public boolean isRoleAllowed(HttpMethod method, String role) {
-            List<String> allowedRoles = getAllowedRoles(method);
-            return allowedRoles != null && allowedRoles.contains(role);
+        public List<String> getAllowedRole() {
+            return methodRoles.get("ROLE");
+        }
+
+        public boolean isPermissionAllowed(Set<Permission> permission, HttpMethod method) {
+            Set<Permission> allowedPermissionSet = getAllowedAuthorize(method).stream()
+                    .map(String::toUpperCase)
+                    .map(Permission::valueOf)
+                    .collect(Collectors.toSet());
+            return permission.stream().noneMatch(allowedPermissionSet::contains);
+        }
+
+        public boolean isRoleAllowed(Set<Role> roles) {
+            Set<Role> allowedRoles = getAllowedRole().stream()
+                    .map(String::toUpperCase)
+                    .map(Role::valueOf)
+                    .collect(Collectors.toSet());
+
+            return roles.stream().noneMatch(allowedRoles::contains);
         }
     }
 }

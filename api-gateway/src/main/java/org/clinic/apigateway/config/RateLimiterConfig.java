@@ -1,6 +1,6 @@
 package org.clinic.apigateway.config;
 
-import org.clinic.commonserviceweb.security.utils.JwtPublicUtil;
+import org.clinic.common_security.security.service.JwtPublicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import java.util.Map;
 @Configuration
 public class RateLimiterConfig {
     @Autowired
-    private JwtPublicUtil jwtPublicUtil;
+    private JwtPublicService jwtPublicService;
 
     @Bean("ipKeyResolver")
     @Primary
@@ -39,7 +39,7 @@ public class RateLimiterConfig {
         return exchange -> {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             if (token != null && token.startsWith("Bearer ")) {
-                Map<String, Object> claims = jwtPublicUtil.validateToken(token.substring(7));
+                Map<String, Object> claims = jwtPublicService.parseClaimsFromToken(token.substring(7));
                 return Mono.just(claims.get("username").toString());
             }
             return Mono.just("anonymous");
