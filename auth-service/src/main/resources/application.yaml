@@ -1,27 +1,5 @@
-server:
-  port: ${PORT:8090}
-
 spring:
   application:
     name: auth-service
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
-  instance:
-    prefer-ip-address: true
-    ip-address: 127.0.0.1
-jwt:
-  private:
-    expiration: 86400000
-    private-key-path: keys/private.pem
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-logging:
-  level:
-    org:
-      springframework:
-        web: debug
+  config:
+    import: optional:configserver:http://localhost:8888

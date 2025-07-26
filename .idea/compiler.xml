@@ -10,6 +10,7 @@
         <module name="api-gateway" />
         <module name="common-service-web-reactive" />
         <module name="common-security" />
+        <module name="config-server" />
         <module name="common-service" />
         <module name="eureka-server" />
       </profile>
@@ -47,6 +48,7 @@
       <module name="common-security" options="-parameters" />
       <module name="common-service" options="-parameters" />
       <module name="common-service-web-reactive" options="-parameters" />
+      <module name="config-server" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="patient-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
