@@ -1,16 +1,17 @@
 package org.clinic.commonserviceweb.security.dto;
 
 import org.clinic.commonserviceweb.security.enums.Permission;
+import org.clinic.commonserviceweb.security.enums.Role;
 
 import java.util.Set;
 
 public class UserContext {
     private final String userId;
     private final String username;
-    private final String role;
+    private final Set<Role> role;
     private final Set<Permission> permission;
 
-    public UserContext(String userId, String username, String role, Set<Permission> permission) {
+    public UserContext(String userId, String username, Set<Role> role, Set<Permission> permission) {
         this.userId = userId;
         this.username = username;
         this.role = role;
@@ -25,7 +26,7 @@ public class UserContext {
         return username;
     }
 
-    public String getRole() {
+    public Set<Role> getRole() {
         return role;
     }
 
