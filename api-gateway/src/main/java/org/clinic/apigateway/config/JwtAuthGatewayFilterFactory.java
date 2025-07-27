@@ -16,10 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -57,7 +54,8 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
                 if (claims == null) {
                     claims = jwtPublicService.parseClaimsFromToken(token);
                     redisTemplate.opsForValue().set(redisKey, claims, Duration.ofMillis(ttlJwtTokenRedis));
-                    userId = claims.get("userId").toString();
+
+                     userId = claims.get("userId") != null ? claims.get("userId").toString() : null;
                     MDC.put("userid", userId);
                 } else {
                     userId = "anonymous";
@@ -70,7 +68,7 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
                     accessDenied = config.isRoleAllowed(roles);
                 }
                 if (!permissions.isEmpty()) {
-                    accessDenied = config.isPermissionAllowed(permissions, method);
+                    accessDenied = accessDenied ? config.isPermissionAllowed(permissions, method) : accessDenied;
                 }
                 if (accessDenied) {
                     throw new JwtAuthException("Access denied for " + method + " " + path);
@@ -138,15 +136,20 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
         }
 
         public boolean isPermissionAllowed(Set<Permission> permission, HttpMethod method) {
-            Set<Permission> allowedPermissionSet = getAllowedAuthorize(method).stream()
+            Set<Permission> allowedPermissionSet = Optional.ofNullable(getAllowedAuthorize(method))
+                    .orElse(Collections.emptyList()) // tránh null
+                    .stream()
                     .map(String::toUpperCase)
                     .map(Permission::valueOf)
                     .collect(Collectors.toSet());
+
             return permission.stream().noneMatch(allowedPermissionSet::contains);
         }
 
         public boolean isRoleAllowed(Set<Role> roles) {
-            Set<Role> allowedRoles = getAllowedRole().stream()
+            Set<Role> allowedRoles = Optional.ofNullable(getAllowedRole())
+                    .orElse(Collections.emptyList())
+                    .stream()
                     .map(String::toUpperCase)
                     .map(Role::valueOf)
                     .collect(Collectors.toSet());

@@ -23,10 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -102,13 +99,13 @@ public class UserContextFilter extends OncePerRequestFilter {
                     boolean accessDenied = true;
                     RequestPermissions requestPermissions = entry.getValue();
                     if (!roles.isEmpty()) {
-                        Set<Role> allowedRoles = requestPermissions.roles();
+                        Set<Role> allowedRoles = Optional.ofNullable(requestPermissions.roles()).orElse(Collections.emptySet());
                         accessDenied = roles.stream().noneMatch(allowedRoles::contains);
                     }
                     if (!permissions.isEmpty()) {
                         Map<HttpMethod, Set<Permission>> allowedPermission = requestPermissions.authorities();
-                        Set<Permission> allowedPermissionSet = allowedPermission.get(method);
-                        accessDenied = permissions.stream().noneMatch(allowedPermissionSet::contains);
+                        Set<Permission> allowedPermissionSet = Optional.ofNullable(allowedPermission.get(method)) .orElse(Collections.emptySet());
+                        accessDenied = accessDenied ? allowedPermissionSet.stream().noneMatch(allowedPermissionSet::contains) : accessDenied;
                     }
                     if (accessDenied) {
                         throw new AccessDeniedException("Access denied: No permission config for path " + path);

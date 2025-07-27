@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse deleteUser(UUID userId) {
-        Optional<UserEntity> userEntity = userRepository.findById(userId);
+            Optional<UserEntity> userEntity = userRepository.findById(userId);
         if (userEntity.isPresent()) {
             userRepository.delete(userEntity.get());
             return UserMapper.INSTANCE.toDtoResponse(userEntity.get());

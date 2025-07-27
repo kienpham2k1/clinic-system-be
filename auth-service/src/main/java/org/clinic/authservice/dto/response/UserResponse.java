@@ -1,7 +1,7 @@
 package org.clinic.authservice.dto.response;
 
 import lombok.*;
-import org.clinic.commonserviceweb.wrapper.dto.BaseResponse;
+import org.clinic.commonserviceweb.audit.sql.BaseEntity;
 
 import java.util.UUID;
 
@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UserResponse extends BaseResponse {
+public class UserResponse {
     private UUID id;
     private String username;
     private String email;

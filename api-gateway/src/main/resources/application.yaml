@@ -35,7 +35,7 @@ spring:
               filters:
                 - name: JwtAuth
                   args:
-                    ROLE: [ PATIENT ]
+                    ROLE: [ PATIENT , DOCTOR]
                     GET: [ ADMIN_READ ]
                 - name: RequestRateLimiter
                   args:

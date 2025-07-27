@@ -3,16 +3,16 @@ server:
 spring:
   application:
     name: config-server
-  profiles:
-    active: native
+#  profiles:
+#    active: native
   cloud:
     config:
       server:
         native:
           search-locations: classpath:/config
-#        git:
-#          uri: https://github.com/kienpham2k1/clinic-system-config-service.git
-#          default-label: main
-#          timeout: 5
-#          clone-on-start: true
-#          force-pull: true
+        git:
+          uri: https://github.com/kienpham2k1/clinic-system-config-service.git
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true

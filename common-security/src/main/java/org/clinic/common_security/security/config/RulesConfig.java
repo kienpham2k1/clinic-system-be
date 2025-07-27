@@ -20,7 +20,7 @@ public class RulesConfig {
     public static final Map<PathPattern, RequestPermissions> RULES = Map.of(
             patternParser.parse("/api/v1/patients/**"),
             new RequestPermissions(
-                    Set.of(Role.PATIENT),
+                    Set.of(Role.PATIENT, Role.DOCTOR),
                     Map.of(HttpMethod.GET, Set.of(Permission.ADMIN_READ))
             )
     );
