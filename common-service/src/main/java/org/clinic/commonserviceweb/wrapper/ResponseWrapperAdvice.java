@@ -1,5 +1,7 @@
 package org.clinic.commonserviceweb.wrapper;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.clinic.commonserviceweb.wrapper.dto.BaseResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -15,7 +17,7 @@ public class ResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
+        return !returnType.getParameterType().equals(String.class);
     }
 
     @Override
@@ -43,7 +45,16 @@ public class ResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
         if (body instanceof BaseResponse) {
             return body;
         }
-
+        if (body instanceof String) {
+            // Phải tự convert thủ công sang JSON vì Spring không thể wrap object và vẫn trả về text/plain
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+                return mapper.writeValueAsString(BaseResponse.success(body));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Failed to wrap String body", e);
+            }
+        }
         return BaseResponse.success(body);
     }
 }
