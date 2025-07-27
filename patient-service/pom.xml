@@ -19,7 +19,7 @@
         <spring-cloud.version>2023.0.1</spring-cloud.version>
         <org.lombok.version>1.18.32</org.lombok.version>
         <org.springdoc>2.5.0</org.springdoc>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version> <!-- dùng bản ổn định -->
+        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     </properties>
 
     <dependencies>
@@ -152,7 +152,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+<!--                <version>3.11.0</version>-->
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>

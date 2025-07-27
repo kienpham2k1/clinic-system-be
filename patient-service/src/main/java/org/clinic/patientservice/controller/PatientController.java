@@ -1,7 +1,7 @@
 package org.clinic.patientservice.controller;
 
 import jakarta.validation.Valid;
-import org.clinic.patientservice.constant.PageConstant;
+import org.clinic.commonserviceweb.constant.PageConstant;
 import org.clinic.patientservice.dto.request.PatientRequestDto;
 import org.clinic.patientservice.dto.response.PatientResponseDto;
 import org.clinic.patientservice.service.PatientService;
@@ -35,7 +35,7 @@ public class PatientController {
     }
 
     @GetMapping("/{patientId}")
-    public ResponseEntity<PatientResponseDto> getPatientsPage(@PathVariable(name = "patientId") UUID patientId) {
+    public ResponseEntity<PatientResponseDto> getPatientById(@PathVariable(name = "patientId") UUID patientId) {
         return ResponseEntity.ok(patientService.getPatientById(patientId));
     }
 

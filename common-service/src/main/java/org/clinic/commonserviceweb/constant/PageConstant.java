@@ -1,4 +1,4 @@
-package org.clinic.patientservice.constant;
+package org.clinic.commonserviceweb.constant;
 
 public class PageConstant {
     public final static String PAGE_SIZE = "10";
