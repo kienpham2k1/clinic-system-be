@@ -18,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Table(name = SqlDatabaseConstant.USER_TABLE)
-@SQLDelete(sql = "UPDATE patient SET is_deleted = true WHERE id = ? AND version = ?")
+@SQLDelete(sql = "UPDATE tbl_user SET is_deleted = true WHERE id = ? AND version = ?")
 @Where(clause = "is_deleted = false")
 public class UserEntity extends BaseEntity {
     @Id
