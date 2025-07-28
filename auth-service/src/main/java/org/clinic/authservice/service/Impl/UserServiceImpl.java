@@ -14,7 +14,7 @@ import org.clinic.authservice.repository.RoleRepository;
 import org.clinic.authservice.repository.UserRepository;
 import org.clinic.authservice.service.UserService;
 import org.clinic.common_security.security.enums.Role;
-import org.clinic.commonserviceweb.exception.DuplicateEntityException;
+import org.clinic.commonserviceweb.exception.DuplicateException;
 import org.clinic.commonserviceweb.exception.NotFoundException;
 import org.clinic.commonserviceweb.localeTimeZone.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponse insertUser(UserRegisterRequest user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new DuplicateEntityException(messageService.translate("user.duplicate", new Object[]{user.getUsername()}));
+            throw new DuplicateException(messageService.translate("user.duplicate", new Object[]{user.getUsername()}));
         }
         String password = passwordEncoder.encode(user.getPassword());
         UserEntity userEntity = UserMapper.INSTANCE.toEntity(user);
