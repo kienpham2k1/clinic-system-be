@@ -1,6 +1,7 @@
 package org.clinic.authservice.dto.response;
 
 import lombok.*;
+import org.clinic.authservice.model.sql.Authorize;
 import org.clinic.commonserviceweb.audit.sql.BaseEntity;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public class UserResponse {
     private String username;
     private String password;
     private String email;
-    List<RoleResponse> roles;
+    List<AuthorizeResponse> authorizes;
 }

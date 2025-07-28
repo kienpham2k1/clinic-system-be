@@ -1,6 +1,7 @@
 package org.clinic.authservice.controller;
 
 import org.clinic.authservice.dto.request.LoginRequest;
+import org.clinic.authservice.dto.response.AuthorizeResponse;
 import org.clinic.authservice.dto.response.RoleResponse;
 import org.clinic.authservice.dto.response.UserResponse;
 import org.clinic.authservice.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -35,8 +37,8 @@ public class AuthController {
 
         if (!isAuthenticate) throw new AccessDeniedException("Invalid username or password");
 
-        List<RoleResponse> roles = userResponse.getRoles();
-        List<Role> listRoleName = Optional.ofNullable(roles).orElse(Collections.emptyList()).stream().map(RoleResponse::getName).toList();
+        List<RoleResponse> roles = userResponse.getAuthorizes().stream().map(AuthorizeResponse::getRole).collect(Collectors.toList());
+        List<Role> listRoleName = Optional.of(roles).orElse(Collections.emptyList()).stream().map(RoleResponse::getName).toList();
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userResponse.getId());
