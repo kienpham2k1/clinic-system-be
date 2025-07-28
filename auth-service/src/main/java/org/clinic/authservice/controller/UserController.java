@@ -5,7 +5,7 @@ import org.clinic.authservice.dto.request.UserRegisterRequest;
 import org.clinic.authservice.dto.request.UserUpdateRequest;
 import org.clinic.authservice.dto.response.UserResponse;
 import org.clinic.authservice.service.UserService;
-import org.clinic.commonserviceweb.constant.PageConstant;
+import org.clinic.common_service_web.constant.PageConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

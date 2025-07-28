@@ -7,7 +7,7 @@ import org.clinic.authservice.dto.response.UserResponse;
 import org.clinic.authservice.service.UserService;
 import org.clinic.common_security.security.enums.Role;
 import org.clinic.common_security.security.service.JwtPrivateService;
-import org.clinic.commonserviceweb.exception.AccessDeniedException;
+import org.clinic.common_service_web.exception.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;

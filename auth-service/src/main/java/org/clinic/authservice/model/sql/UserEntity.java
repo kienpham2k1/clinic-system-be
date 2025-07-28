@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.clinic.authservice.constant.SqlDatabaseConstant;
-import org.clinic.commonserviceweb.audit.sql.BaseEntity;
+import org.clinic.common_service_web.audit.sql.BaseEntity;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 

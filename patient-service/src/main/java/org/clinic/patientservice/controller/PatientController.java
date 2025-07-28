@@ -1,7 +1,7 @@
 package org.clinic.patientservice.controller;
 
 import jakarta.validation.Valid;
-import org.clinic.commonserviceweb.constant.PageConstant;
+import org.clinic.common_service_web.constant.PageConstant;
 import org.clinic.patientservice.dto.request.PatientRequestDto;
 import org.clinic.patientservice.dto.response.PatientResponseDto;
 import org.clinic.patientservice.service.PatientService;

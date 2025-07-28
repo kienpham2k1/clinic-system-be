@@ -1,7 +1,7 @@
 package org.clinic.patientservice.service.impl;
 
-import org.clinic.commonserviceweb.exception.NotFoundException;
-import org.clinic.commonserviceweb.localeTimeZone.service.MessageService;
+import org.clinic.common_service_web.exception.NotFoundException;
+import org.clinic.common_service_web.localeTimeZone.service.MessageService;
 import org.clinic.patientservice.dto.request.PatientRequestDto;
 import org.clinic.patientservice.dto.response.PatientResponseDto;
 import org.clinic.patientservice.mapper.PatientMapper;

@@ -1,7 +1,7 @@
 package org.clinic.patientservice.dto.request;
 
 import lombok.*;
-import org.clinic.commonserviceweb.validation.annotation.RequiredField;
+import org.clinic.common_service_web.validation.annotation.RequiredField;
 
 @NoArgsConstructor
 @AllArgsConstructor

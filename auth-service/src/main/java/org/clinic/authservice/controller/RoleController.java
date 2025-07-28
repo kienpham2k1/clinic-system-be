@@ -3,7 +3,7 @@ package org.clinic.authservice.controller;
 import org.clinic.authservice.dto.request.RoleRequest;
 import org.clinic.authservice.dto.response.RoleResponse;
 import org.clinic.authservice.service.RoleService;
-import org.clinic.commonserviceweb.constant.PageConstant;
+import org.clinic.common_service_web.constant.PageConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

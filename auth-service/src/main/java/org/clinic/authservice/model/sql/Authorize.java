@@ -3,7 +3,7 @@ package org.clinic.authservice.model.sql;
 import jakarta.persistence.*;
 import lombok.*;
 import org.clinic.authservice.constant.SqlDatabaseConstant;
-import org.clinic.commonserviceweb.audit.sql.BaseEntity;
+import org.clinic.common_service_web.audit.sql.BaseEntity;
 
 @Entity
 @NoArgsConstructor

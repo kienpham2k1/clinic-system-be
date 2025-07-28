@@ -1,6 +1,6 @@
 package org.clinic.patientservice.config.audit;
 
-import org.clinic.commonserviceweb.security.service.UserContextProvider;
+import org.clinic.common_service_web.security.service.UserContextProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;

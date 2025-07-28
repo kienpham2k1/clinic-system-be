@@ -8,7 +8,7 @@
         <version>3.5.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.example</groupId>
+    <groupId>org.clinic</groupId>
     <artifactId>api-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api-gateway</name>
