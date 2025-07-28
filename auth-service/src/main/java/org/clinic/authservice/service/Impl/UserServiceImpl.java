@@ -12,6 +12,7 @@ import org.clinic.commonserviceweb.localeTimeZone.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Page<UserResponse> getUserByPage(Pageable pageable) {
@@ -50,7 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse insertUser(UserRegisterRequest user) {
+        String password = passwordEncoder.encode(user.getPassword());
         UserEntity userEntity = UserMapper.INSTANCE.toEntity(user);
+        userEntity.setPassword(password);
         userRepository.save(userEntity);
         return UserMapper.INSTANCE.toDtoResponse(userEntity);
     }

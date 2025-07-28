@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.clinic.authservice.constant.SqlDatabaseConstant;
+import org.clinic.common_security.security.enums.Role;
 import org.clinic.commonserviceweb.audit.sql.BaseEntity;
 import org.clinic.commonserviceweb.constant.CommonSqlDatabaseConstant;
 import org.hibernate.annotations.SQLDelete;
@@ -28,5 +29,6 @@ public class RoleEntity extends BaseEntity {
 
     @Column(name = SqlDatabaseConstant.ROLE_NAME)
     @NotNull
-    private String name;
+    @Enumerated(EnumType.ORDINAL)
+    private Role name;
 }
