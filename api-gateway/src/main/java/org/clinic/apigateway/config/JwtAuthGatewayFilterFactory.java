@@ -55,14 +55,14 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
                     claims = jwtPublicService.parseClaimsFromToken(token);
                     redisTemplate.opsForValue().set(redisKey, claims, Duration.ofMillis(ttlJwtTokenRedis));
 
-                     userId = claims.get("userId") != null ? claims.get("userId").toString() : null;
+                    userId = claims.get("userId") != null ? claims.get("userId").toString() : null;
                     MDC.put("userid", userId);
                 } else {
                     userId = "anonymous";
                 }
 
                 Set<Role> roles = jwtPublicService.getRoles(claims);
-                Set<Permission> permissions = jwtPublicService.getPermissions(claims);
+                Set<Permission> permissions = roles.stream().map(r -> Permission.valueOf(r.name())).collect(Collectors.toSet());
 
                 if (!roles.isEmpty()) {
                     accessDenied = config.isRoleAllowed(roles);

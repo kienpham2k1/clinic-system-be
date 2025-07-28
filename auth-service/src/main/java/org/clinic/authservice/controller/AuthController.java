@@ -46,4 +46,9 @@ public class AuthController {
         String token = jwtUtil.generateToken(claims, null);
         return Map.of("token", token, "refreshToken", token);
     }
+
+    @PostMapping("/logout")
+    public void logout() {
+
+    }
 }

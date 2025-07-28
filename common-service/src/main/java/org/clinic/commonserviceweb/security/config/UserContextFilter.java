@@ -76,7 +76,6 @@ public class UserContextFilter extends OncePerRequestFilter {
         String userId = request.getHeader("X-USER-ID");
         String username = request.getHeader("X-USERNAME");
         String role = request.getHeader("X-ROLE");
-        String perms = request.getHeader("X-PERMISSIONS");
         Set<Role> roles = Arrays.stream(Optional.ofNullable(role).orElse("")
                         .split(","))
                 .filter(s -> !s.isEmpty())
@@ -84,12 +83,7 @@ public class UserContextFilter extends OncePerRequestFilter {
                 .map(Role::valueOf)
                 .collect(Collectors.toSet());
 
-        Set<Permission> permissions = Arrays.stream(Optional.ofNullable(perms).orElse("")
-                        .split(","))
-                .filter(s -> !s.isEmpty())
-                .map(String::trim)
-                .map(Permission::valueOf)
-                .collect(Collectors.toSet());
+        Set<Permission> permissions = roles.stream().map(r -> Permission.valueOf(r.name())).collect(Collectors.toSet());
 
         RulesConfig.RULES.entrySet().stream()
                 .filter(entry ->
