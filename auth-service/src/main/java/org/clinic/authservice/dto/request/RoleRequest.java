@@ -1,10 +1,13 @@
 package org.clinic.authservice.dto.request;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+import org.clinic.common_security.security.enums.Role;
 
-@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class RoleRequest {
-    private String roleName;
+    private Role name;
 }

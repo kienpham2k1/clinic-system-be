@@ -10,6 +10,7 @@ import org.clinic.commonserviceweb.constant.CommonSqlDatabaseConstant;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,16 +20,19 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Table(name = SqlDatabaseConstant.ROLE_TABLE)
-@SQLDelete(sql = "UPDATE patient SET is_deleted = true WHERE id = ? AND version = ?")
+@SQLDelete(sql = "UPDATE tbl_role SET is_deleted = true WHERE role_id = ? AND version = ?")
 @Where(clause = "is_deleted = false")
 public class RoleEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = CommonSqlDatabaseConstant.ID)
+    @Column(name = SqlDatabaseConstant.ROLE_ID)
     private UUID id;
 
     @Column(name = SqlDatabaseConstant.ROLE_NAME)
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private Role name;
+
+    @OneToMany(mappedBy = "role")
+    Set<Authorize> authorizes;
 }
