@@ -22,7 +22,7 @@ public class UserContextProviderImpl implements UserContextProvider {
     }
 
     public String getUserId() {
-        return getCurrentUser().map(UserContext::getUserId).orElse(null );
+        return getCurrentUser().map(UserContext::getUserId).orElse(null);
     }
 
     public String getUsername() {

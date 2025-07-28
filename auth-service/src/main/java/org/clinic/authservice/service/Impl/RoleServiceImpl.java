@@ -62,7 +62,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponse deleteRole(UUID roleId) {
         Optional<RoleEntity> roleEntity = roleRepository.findById(roleId);
-        if(roleEntity.isPresent()) {
+        if (roleEntity.isPresent()) {
             roleRepository.delete(roleEntity.get());
             return RoleMapper.INSTANCE.toDtoResponse(roleRepository.save(roleEntity.get()));
         } else throw new NotFoundException(messageService.translate("patient.not-found", new Object[]{roleId}));

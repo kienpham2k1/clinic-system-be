@@ -1,10 +1,7 @@
 package org.clinic.authservice.service;
 
 import org.clinic.authservice.dto.request.RoleRequest;
-import org.clinic.authservice.dto.request.UserRegisterRequest;
-import org.clinic.authservice.dto.request.UserUpdateRequest;
 import org.clinic.authservice.dto.response.RoleResponse;
-import org.clinic.authservice.dto.response.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

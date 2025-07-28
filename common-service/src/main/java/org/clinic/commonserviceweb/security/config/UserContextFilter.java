@@ -98,7 +98,7 @@ public class UserContextFilter extends OncePerRequestFilter {
                     }
                     if (!permissions.isEmpty()) {
                         Map<HttpMethod, Set<Permission>> allowedPermission = requestPermissions.authorities();
-                        Set<Permission> allowedPermissionSet = Optional.ofNullable(allowedPermission.get(method)) .orElse(Collections.emptySet());
+                        Set<Permission> allowedPermissionSet = Optional.ofNullable(allowedPermission.get(method)).orElse(Collections.emptySet());
                         accessDenied = accessDenied ? allowedPermissionSet.stream().noneMatch(allowedPermissionSet::contains) : accessDenied;
                     }
                     if (accessDenied) {

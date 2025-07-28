@@ -16,7 +16,7 @@ spring:
     show-sql: ${SHOW_SQL:true}
     properties:
       hibernate:
-        format_sql=true:
+        format_sql: true
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
   config:
     import: optional:configserver:http://localhost:8888
@@ -49,3 +49,9 @@ logging:
     org:
       springframework:
         web: debug
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

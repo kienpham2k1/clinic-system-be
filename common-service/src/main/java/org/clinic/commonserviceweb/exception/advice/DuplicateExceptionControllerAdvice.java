@@ -1,9 +1,7 @@
 package org.clinic.commonserviceweb.exception.advice;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.clinic.commonserviceweb.exception.DuplicateException;
-import org.clinic.commonserviceweb.exception.NotFoundException;
 import org.clinic.commonserviceweb.exception.dto.error.ErrorResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -5,8 +5,6 @@ import lombok.*;
 import org.clinic.authservice.constant.SqlDatabaseConstant;
 import org.clinic.commonserviceweb.audit.sql.BaseEntity;
 
-import java.util.UUID;
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +12,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @Table(name = SqlDatabaseConstant.AUTHORIZE)
-public class Authorize extends BaseEntity{
+public class Authorize extends BaseEntity {
     @EmbeddedId
     private AuthorizeId authorizeId;
 

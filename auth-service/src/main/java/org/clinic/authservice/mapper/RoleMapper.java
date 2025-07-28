@@ -1,11 +1,8 @@
 package org.clinic.authservice.mapper;
 
 import org.clinic.authservice.dto.request.RoleRequest;
-import org.clinic.authservice.dto.request.UserRegisterRequest;
 import org.clinic.authservice.dto.response.RoleResponse;
-import org.clinic.authservice.dto.response.UserResponse;
 import org.clinic.authservice.model.sql.RoleEntity;
-import org.clinic.authservice.model.sql.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

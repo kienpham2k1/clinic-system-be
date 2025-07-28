@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.UUID;
 
 @RestController
@@ -46,7 +45,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable(name = "userId") UUID userId,
-                                                            @RequestBody UserUpdateRequest userDto) {
+                                                   @RequestBody UserUpdateRequest userDto) {
         return ResponseEntity.ok(userService.updateUser(userId, userDto));
     }
 

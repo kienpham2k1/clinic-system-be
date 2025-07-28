@@ -1,12 +1,8 @@
 package org.clinic.authservice.controller;
 
-import jakarta.validation.Valid;
 import org.clinic.authservice.dto.request.RoleRequest;
-import org.clinic.authservice.dto.request.UserRegisterRequest;
-import org.clinic.authservice.dto.request.UserUpdateRequest;
 import org.clinic.authservice.dto.response.RoleResponse;
 import org.clinic.authservice.service.RoleService;
-import org.clinic.common_security.security.enums.Role;
 import org.clinic.commonserviceweb.constant.PageConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
