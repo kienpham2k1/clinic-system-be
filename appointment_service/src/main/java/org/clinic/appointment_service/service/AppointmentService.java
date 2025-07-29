@@ -1,6 +1,5 @@
 package org.clinic.appointment_service.service;
 
-import org.clinic.appointment_service.dto.response.AppointmentResponse;
 import org.clinic.appointment_service.dto.request.AppointmentRequest;
 import org.clinic.appointment_service.dto.response.AppointmentResponse;
 import org.springframework.data.domain.Page;

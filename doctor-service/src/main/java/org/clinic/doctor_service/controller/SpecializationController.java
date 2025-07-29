@@ -3,7 +3,6 @@ package org.clinic.doctor_service.controller;
 import org.clinic.common_service_web.constant.PageConstant;
 import org.clinic.doctor_service.dto.request.SpecializationRequest;
 import org.clinic.doctor_service.dto.response.SpecializationResponse;
-import org.clinic.doctor_service.service.DoctorService;
 import org.clinic.doctor_service.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +43,7 @@ public class SpecializationController {
 
     @PutMapping("/{specializationId}")
     public ResponseEntity<SpecializationResponse> updateSpecialization(@PathVariable(name = "specializationId") UUID specializationId,
-                                                   @RequestBody SpecializationRequest specializationRequest) {
+                                                                       @RequestBody SpecializationRequest specializationRequest) {
         return ResponseEntity.ok(specializationService.updateSpecialization(specializationId, specializationRequest));
     }
 

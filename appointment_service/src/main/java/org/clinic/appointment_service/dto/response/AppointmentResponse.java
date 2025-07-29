@@ -1,12 +1,10 @@
 package org.clinic.appointment_service.dto.response;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
-import org.clinic.appointment_service.constant.SqlDatabaseConstant;
 import org.clinic.appointment_service.enums.Mode;
 import org.clinic.appointment_service.enums.Status;
+import org.clinic.common_service_web.dto.DoctorResponse;
+import org.clinic.common_service_web.dto.PatientResponse;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,4 +24,6 @@ public class AppointmentResponse {
     private LocalDate date;
     private LocalTime time;
     private Status status;
+    private DoctorResponse doctor;
+    private PatientResponse patient;
 }

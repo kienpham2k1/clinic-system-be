@@ -42,7 +42,8 @@ public class SpecializationServiceImpl implements SpecializationService {
         Optional<SpecializationEntity> specializationEntity = specializationRepository.findById(specializationId);
         if (specializationEntity.isPresent()) {
             return SpecializationMapper.INSTANCE.toDtoResponse(specializationEntity.get());
-        } else throw new NotFoundException(messageService.translate("specialization.not-found", new Object[]{specializationId}));
+        } else
+            throw new NotFoundException(messageService.translate("specialization.not-found", new Object[]{specializationId}));
     }
 
     @Override
@@ -58,7 +59,8 @@ public class SpecializationServiceImpl implements SpecializationService {
         if (specializationEntity.isPresent()) {
             SpecializationMapper.INSTANCE.updateEntityFromRequest(specializationRequest, specializationEntity.get());
             return SpecializationMapper.INSTANCE.toDtoResponse(specializationRepository.saveAndFlush(specializationEntity.get()));
-        } else throw new NotFoundException(messageService.translate("specialization.not-found", new Object[]{specializationId}));
+        } else
+            throw new NotFoundException(messageService.translate("specialization.not-found", new Object[]{specializationId}));
     }
 
     @Override
@@ -67,6 +69,7 @@ public class SpecializationServiceImpl implements SpecializationService {
         if (specializationEntity.isPresent()) {
             specializationRepository.delete(specializationEntity.get());
             return SpecializationMapper.INSTANCE.toDtoResponse(specializationEntity.get());
-        } else throw new NotFoundException(messageService.translate("specialization.not-found", new Object[]{specializationId}));
+        } else
+            throw new NotFoundException(messageService.translate("specialization.not-found", new Object[]{specializationId}));
     }
 }

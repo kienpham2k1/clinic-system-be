@@ -5,6 +5,7 @@ import org.clinic.patient_service.dto.response.PatientResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface PatientService {
@@ -17,4 +18,6 @@ public interface PatientService {
     PatientResponseDto updatePatient(UUID patientId, PatientRequestDto patientRequestDto);
 
     PatientResponseDto deletePatient(UUID patientId);
+
+    List<PatientResponseDto> getPatientsList(List<UUID> patientIds);
 }

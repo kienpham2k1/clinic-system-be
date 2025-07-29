@@ -23,7 +23,7 @@ public interface SpecializationMapper {
 
     List<SpecializationResponse> toDtoList(List<SpecializationEntity> entities);
 
-    @Mapping(   target = "id", ignore = true)
+    @Mapping(target = "id", ignore = true)
     void updateEntityFromRequest(SpecializationRequest from, @MappingTarget SpecializationEntity to);
 
     default <T, D> Page<D> mapPage(Page<T> sourcePage, Function<T, D> mapper) {

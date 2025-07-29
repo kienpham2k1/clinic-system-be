@@ -23,7 +23,7 @@ public interface DepartmentMapper {
 
     List<DepartmentResponse> toDtoList(List<DepartmentEntity> entities);
 
-    @Mapping(   target = "id", ignore = true)
+    @Mapping(target = "id", ignore = true)
     void updateEntityFromRequest(DepartmentRequest from, @MappingTarget DepartmentEntity to);
 
     default <T, D> Page<D> mapPage(Page<T> sourcePage, Function<T, D> mapper) {

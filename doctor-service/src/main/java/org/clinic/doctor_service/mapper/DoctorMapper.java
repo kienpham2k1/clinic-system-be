@@ -23,7 +23,7 @@ public interface DoctorMapper {
 
     List<DoctorResponse> toDtoList(List<DoctorEntity> entities);
 
-    @Mapping(   target = "id", ignore = true)
+    @Mapping(target = "id", ignore = true)
     void updateEntityFromRequest(DoctorRequest from, @MappingTarget DoctorEntity to);
 
     default <T, D> Page<D> mapPage(Page<T> sourcePage, Function<T, D> mapper) {

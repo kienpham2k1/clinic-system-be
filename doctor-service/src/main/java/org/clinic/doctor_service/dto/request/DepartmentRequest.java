@@ -3,8 +3,6 @@ package org.clinic.doctor_service.dto.request;
 import lombok.*;
 import org.clinic.doctor_service.enums.DepartmentStatus;
 
-import java.time.LocalDate;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

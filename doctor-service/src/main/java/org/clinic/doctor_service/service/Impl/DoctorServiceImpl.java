@@ -70,4 +70,10 @@ public class DoctorServiceImpl implements DoctorService {
             return DoctorMapper.INSTANCE.toDtoResponse(DoctorEntity.get());
         } else throw new NotFoundException(messageService.translate("doctor.not-found", new Object[]{doctorId}));
     }
+
+    @Override
+    public List<DoctorResponse> getDoctorsList(List<UUID> doctorIds) {
+        List<DoctorEntity> doctorResponses = doctorRepository.findAllById(doctorIds);
+        return DoctorMapper.INSTANCE.toDtoList(doctorResponses);
+    }
 }

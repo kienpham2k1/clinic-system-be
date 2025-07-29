@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.util.pattern.PathPattern;
 import org.springframework.web.util.pattern.PathPatternParser;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,11 +18,12 @@ public class RulesConfig {
     );
 
 
-    public static final Map<PathPattern, RequestPermissions> RULES = Map.of(
-            patternParser.parse("/api/v1/patients/**"),
-            new RequestPermissions(
-                    Set.of(Role.PATIENT, Role.DOCTOR),
-                    Map.of(HttpMethod.GET, Set.of(Permission.ADMIN_READ))
-            )
-    );
+    public static final Map<PathPattern, RequestPermissions> RULES =
+//            patternParser.parse("/api/v1/patients/**"),
+//            new RequestPermissions(
+//                    Set.of(Role.PATIENT, Role.DOCTOR),
+//                    Map.of(HttpMethod.GET, Set.of(Permission.ADMIN_READ))
+            Collections.emptyMap()
+
+     ;
 }

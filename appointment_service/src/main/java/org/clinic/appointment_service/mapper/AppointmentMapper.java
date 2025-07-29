@@ -23,7 +23,7 @@ public interface AppointmentMapper {
 
     List<AppointmentResponse> toDtoList(List<AppointmentEntity> entities);
 
-    @Mapping(   target = "id", ignore = true)
+    @Mapping(target = "id", ignore = true)
     void updateEntityFromRequest(AppointmentRequest from, @MappingTarget AppointmentEntity to);
 
     default <T, D> Page<D> mapPage(Page<T> sourcePage, Function<T, D> mapper) {

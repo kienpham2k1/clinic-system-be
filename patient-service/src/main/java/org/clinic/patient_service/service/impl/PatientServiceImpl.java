@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,5 +62,11 @@ public class PatientServiceImpl implements PatientService {
             patientRepository.delete(patientEntity.get());
             return PatientMapper.INSTANCE.toDtoResponse(patientEntity.get());
         } else throw new NotFoundException(messageService.translate("patient.not-found", new Object[]{patientId}));
+    }
+
+    @Override
+    public List<PatientResponseDto> getPatientsList(List<UUID> patientIds) {
+        List<PatientEntity> patientEntities = patientRepository.findAllById(patientIds);
+        return PatientMapper.INSTANCE.toDtoList(patientEntities);
     }
 }

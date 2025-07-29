@@ -43,7 +43,7 @@ public class AppointmentController {
 
     @PutMapping("/{appointmentId}")
     public ResponseEntity<AppointmentResponse> updateDoctor(@PathVariable(name = "appointmentId") UUID appointmentId,
-                                                   @RequestBody AppointmentRequest appointmentRequest) {
+                                                            @RequestBody AppointmentRequest appointmentRequest) {
         return ResponseEntity.ok(appointmentService.updateAppointment(appointmentId, appointmentRequest));
     }
 

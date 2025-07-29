@@ -47,6 +47,7 @@ management:
         include: '*'
 logging:
   level:
+    feign: debug
     org:
       springframework:
         web: debug

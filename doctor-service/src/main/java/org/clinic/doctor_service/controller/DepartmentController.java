@@ -4,7 +4,6 @@ import org.clinic.common_service_web.constant.PageConstant;
 import org.clinic.doctor_service.dto.request.DepartmentRequest;
 import org.clinic.doctor_service.dto.response.DepartmentResponse;
 import org.clinic.doctor_service.service.DepartmentService;
-import org.clinic.doctor_service.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,7 +43,7 @@ public class DepartmentController {
 
     @PutMapping("/{departmentId}")
     public ResponseEntity<DepartmentResponse> updateDepartment(@PathVariable(name = "departmentId") UUID departmentId,
-                                                   @RequestBody DepartmentRequest departmentRequest) {
+                                                               @RequestBody DepartmentRequest departmentRequest) {
         return ResponseEntity.ok(departmentService.updateDepartment(departmentId, departmentRequest));
     }
 

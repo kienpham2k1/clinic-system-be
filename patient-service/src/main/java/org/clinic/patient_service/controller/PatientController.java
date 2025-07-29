@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -32,6 +33,11 @@ public class PatientController {
     ) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
         return ResponseEntity.ok(patientService.getPatientsPage(pageable));
+    }
+
+    @PostMapping(value = "/get-list")
+    public ResponseEntity<List<PatientResponseDto>> getPatientsList(@RequestBody List<UUID> patientIds) {
+        return ResponseEntity.ok(patientService.getPatientsList(patientIds));
     }
 
     @GetMapping("/{patientId}")

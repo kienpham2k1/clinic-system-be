@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,6 +32,11 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.getDoctorByPage(pageable));
     }
 
+    @PostMapping(value = "/get-list")
+    public ResponseEntity<List<DoctorResponse>> getDoctorsList(@RequestBody List<UUID> doctorIds) {
+        return ResponseEntity.ok(doctorService.getDoctorsList(doctorIds));
+    }
+
     @GetMapping("/{doctorId}")
     public ResponseEntity<DoctorResponse> getRoleById(@PathVariable(name = "doctorId") UUID doctorId) {
         return ResponseEntity.ok(doctorService.getDoctorById(doctorId));
@@ -43,7 +49,7 @@ public class DoctorController {
 
     @PutMapping("/{doctorId}")
     public ResponseEntity<DoctorResponse> updateDoctor(@PathVariable(name = "doctorId") UUID doctorId,
-                                                   @RequestBody DoctorRequest doctorRequest) {
+                                                       @RequestBody DoctorRequest doctorRequest) {
         return ResponseEntity.ok(doctorService.updateDoctor(doctorId, doctorRequest));
     }
 
