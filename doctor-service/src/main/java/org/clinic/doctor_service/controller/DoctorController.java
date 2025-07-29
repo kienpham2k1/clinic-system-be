@@ -21,7 +21,7 @@ public class DoctorController {
     private DoctorService doctorService;
 
     @GetMapping
-    public ResponseEntity<Page<DoctorResponse>> getRoleByPage(
+    public ResponseEntity<Page<DoctorResponse>> getDoctorByPage(
             @RequestParam(name = "pageNo", defaultValue = PageConstant.PAGE_START) int pageNo,
             @RequestParam(name = "pageSize", defaultValue = PageConstant.PAGE_SIZE) int pageSize,
             @RequestParam(name = "sortBy", defaultValue = PageConstant.PAGE_ORDER_BY) String sortBy,

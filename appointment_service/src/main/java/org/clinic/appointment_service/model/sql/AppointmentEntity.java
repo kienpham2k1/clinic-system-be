@@ -18,7 +18,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE tbl_doctor SET is_deleted = true WHERE doctor_id = ? AND version = ?")
+@SQLDelete(sql = "UPDATE tbl_appointment SET is_deleted = true WHERE doctor_id = ? AND version = ?")
 @Where(clause = "is_deleted = false")
 @Table(name = SqlDatabaseConstant.APPOINTMENT)
 @Builder

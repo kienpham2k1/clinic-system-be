@@ -29,8 +29,8 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Page<DoctorResponse> getDoctorByPage(Pageable pageable) {
         var doctorEntityPage = doctorRepository.findAll(pageable);
-        Page<DoctorResponse> userResponsesPage = DoctorMapper.INSTANCE.mapPage(doctorEntityPage, DoctorMapper.INSTANCE::toDtoResponse);
-        return userResponsesPage;
+        Page<DoctorResponse> doctorResponsePage = DoctorMapper.INSTANCE.mapPage(doctorEntityPage, DoctorMapper.INSTANCE::toDtoResponse);
+        return doctorResponsePage;
     }
 
     @Override

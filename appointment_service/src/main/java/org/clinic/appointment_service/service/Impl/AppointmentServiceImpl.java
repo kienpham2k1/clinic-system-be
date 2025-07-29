@@ -29,8 +29,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Page<AppointmentResponse> getAppointmentByPage(Pageable pageable) {
         var appointmentEntityPage = appointmentRepository.findAll(pageable);
-        Page<AppointmentResponse> userResponsesPage = AppointmentMapper.INSTANCE.mapPage(appointmentEntityPage, AppointmentMapper.INSTANCE::toDtoResponse);
-        return userResponsesPage;
+        Page<AppointmentResponse> appointmentResponsePage = AppointmentMapper.INSTANCE.mapPage(appointmentEntityPage, AppointmentMapper.INSTANCE::toDtoResponse);
+        return appointmentResponsePage;
     }
 
     @Override
