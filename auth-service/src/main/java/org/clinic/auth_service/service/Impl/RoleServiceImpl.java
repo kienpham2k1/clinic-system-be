@@ -56,7 +56,7 @@ public class RoleServiceImpl implements RoleService {
         if (roleEntity.isPresent()) {
             RoleMapper.INSTANCE.updateEntityFromRequest(role, roleEntity.get());
             return RoleMapper.INSTANCE.toDtoResponse(roleRepository.save(roleEntity.get()));
-        } else throw new NotFoundException(messageService.translate("patient.not-found", new Object[]{roleId}));
+        } else throw new NotFoundException(messageService.translate("role.not-found", new Object[]{roleId}));
     }
 
     @Override
@@ -65,6 +65,6 @@ public class RoleServiceImpl implements RoleService {
         if (roleEntity.isPresent()) {
             roleRepository.delete(roleEntity.get());
             return RoleMapper.INSTANCE.toDtoResponse(roleRepository.save(roleEntity.get()));
-        } else throw new NotFoundException(messageService.translate("patient.not-found", new Object[]{roleId}));
+        } else throw new NotFoundException(messageService.translate("role.not-found", new Object[]{roleId}));
     }
 }
