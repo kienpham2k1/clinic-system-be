@@ -3,6 +3,7 @@ package org.clinic.appointment_service.dto.response;
 import lombok.*;
 import org.clinic.appointment_service.enums.Mode;
 import org.clinic.appointment_service.enums.Status;
+import org.clinic.common_service_web.dto.DepartmentResponse;
 import org.clinic.common_service_web.dto.DoctorResponse;
 import org.clinic.common_service_web.dto.PatientResponse;
 
@@ -26,4 +27,5 @@ public class AppointmentResponse {
     private Status status;
     private DoctorResponse doctor;
     private PatientResponse patient;
+    private DepartmentResponse department;
 }

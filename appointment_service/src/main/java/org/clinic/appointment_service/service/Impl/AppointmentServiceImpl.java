@@ -1,5 +1,6 @@
 package org.clinic.appointment_service.service.Impl;
 
+import org.clinic.appointment_service.client.DepartmentClient;
 import org.clinic.appointment_service.client.DoctorClient;
 import org.clinic.appointment_service.client.PatientClient;
 import org.clinic.appointment_service.dto.request.AppointmentRequest;
@@ -8,6 +9,7 @@ import org.clinic.appointment_service.mapper.AppointmentMapper;
 import org.clinic.appointment_service.model.sql.AppointmentEntity;
 import org.clinic.appointment_service.repository.AppointmentRepository;
 import org.clinic.appointment_service.service.AppointmentService;
+import org.clinic.common_service_web.dto.DepartmentResponse;
 import org.clinic.common_service_web.dto.DoctorResponse;
 import org.clinic.common_service_web.dto.PatientResponse;
 import org.clinic.common_service_web.exception.NotFoundException;
@@ -34,6 +36,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private PatientClient patientClient;
 
+    @Autowired
+    private DepartmentClient departmentClient;
+
     @Override
     public Page<AppointmentResponse> getAppointmentByPage(Pageable pageable) {
         var appointmentEntityPage = appointmentRepository.findAll(pageable);
@@ -42,18 +47,23 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         Set<UUID> doctorIds = appointmentResponseSet.stream().map(AppointmentResponse::getDoctorId).collect(Collectors.toSet());
         Set<UUID> patientIds = appointmentResponseSet.stream().map(AppointmentResponse::getPatientId).collect(Collectors.toSet());
+        Set<UUID> departmentIds = appointmentResponseSet.stream().map(AppointmentResponse::getDepartmentId).collect(Collectors.toSet());
 
         List<DoctorResponse> doctorResponses = doctorClient.getDoctorsByListId(new ArrayList<>(doctorIds)).getData();
         List<PatientResponse> patientResponses = patientClient.getPatientsByListId(new ArrayList<>(patientIds)).getData();
+        List<DepartmentResponse> departmentResponses = departmentClient.getDepartmentByListId(new ArrayList<>(departmentIds)).getData();
 
         Map<UUID, DoctorResponse> doctorMap = doctorResponses.stream()
                 .collect(Collectors.toMap(DoctorResponse::getId, d -> d));
         Map<UUID, PatientResponse> patientMap = patientResponses.stream()
                 .collect(Collectors.toMap(PatientResponse::getId, p -> p));
+        Map<UUID, DepartmentResponse> departmentMap = departmentResponses.stream()
+                .collect(Collectors.toMap(DepartmentResponse::getId, p -> p));
 
         appointmentResponseSet.forEach(a -> {
             a.setDoctor(doctorMap.get(a.getDoctorId()));
             a.setPatient(patientMap.get(a.getPatientId()));
+            a.setDepartment(departmentMap.get(a.getDepartmentId()));
         });
         return appointmentResponsePage;
     }

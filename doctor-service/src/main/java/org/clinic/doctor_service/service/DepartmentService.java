@@ -21,4 +21,5 @@ public interface DepartmentService {
 
     DepartmentResponse deleteDepartment(UUID departmentId);
 
+    List<DepartmentResponse> getDepartmentsList(List<UUID> departmentIds);
 }

@@ -3,6 +3,7 @@ package org.clinic.doctor_service.controller;
 import org.clinic.common_service_web.constant.PageConstant;
 import org.clinic.doctor_service.dto.request.DepartmentRequest;
 import org.clinic.doctor_service.dto.response.DepartmentResponse;
+import org.clinic.doctor_service.dto.response.DoctorResponse;
 import org.clinic.doctor_service.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +31,11 @@ public class DepartmentController {
     ) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
         return ResponseEntity.ok(departmentService.getDepartmentByPage(pageable));
+    }
+
+    @PostMapping(value = "/get-list")
+    public ResponseEntity<List<DepartmentResponse>> getDepartmentsList(@RequestBody List<UUID> departmentIds) {
+        return ResponseEntity.ok(departmentService.getDepartmentsList(departmentIds));
     }
 
     @GetMapping("/{departmentId}")

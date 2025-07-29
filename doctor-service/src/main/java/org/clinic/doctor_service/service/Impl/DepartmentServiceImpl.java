@@ -5,7 +5,9 @@ import org.clinic.common_service_web.localeTimeZone.service.MessageService;
 import org.clinic.doctor_service.dto.request.DepartmentRequest;
 import org.clinic.doctor_service.dto.response.DepartmentResponse;
 import org.clinic.doctor_service.mapper.DepartmentMapper;
+import org.clinic.doctor_service.mapper.DoctorMapper;
 import org.clinic.doctor_service.model.sql.DepartmentEntity;
+import org.clinic.doctor_service.model.sql.DoctorEntity;
 import org.clinic.doctor_service.repository.DepartmentRepository;
 import org.clinic.doctor_service.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +73,11 @@ public class DepartmentServiceImpl implements DepartmentService {
             return DepartmentMapper.INSTANCE.toDtoResponse(departmentEntity.get());
         } else
             throw new NotFoundException(messageService.translate("department.not-found", new Object[]{departmentId}));
+    }
+
+    @Override
+    public List<DepartmentResponse> getDepartmentsList(List<UUID> departmentIds) {
+        List<DepartmentEntity> departmentEntities = departmentRepository.findAllById(departmentIds);
+        return DepartmentMapper.INSTANCE.toDtoList(departmentEntities);
     }
 }
