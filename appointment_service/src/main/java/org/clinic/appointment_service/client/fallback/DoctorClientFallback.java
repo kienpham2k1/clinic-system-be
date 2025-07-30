@@ -16,26 +16,30 @@ public class DoctorClientFallback implements DoctorClient {
 
     @Override
     public BaseResponse<DoctorResponse> getDoctorById(UUID id) {
-        // Trả về bản ghi giả hoặc thông báo lỗi
-        log.info("getDoctorById fall back call");
-        DoctorResponse doctor = new DoctorResponse();
-        return new BaseResponse<DoctorResponse>("200", "321321",doctor);
+        log.error("Doctor service is down. Returning default response");
+        return null;
     }
 
     @Override
     public BaseResponse<List<DoctorResponse>> getDoctorsByListId(List<UUID> id) {
-        log.info("getDoctorById fall back call");
-        DoctorResponse doctor = new DoctorResponse();
-        return new BaseResponse<List<DoctorResponse>>("200", "321321",List.of(doctor));
+        log.error("Doctor service is down. Returning default response");
+        return null;
     }
 
     @Override
     public BaseResponse<DepartmentResponse> geDepartmentById(UUID id) {
+        log.error("Doctor service is down. Returning default response");
         return null;
     }
 
     @Override
     public BaseResponse<List<DepartmentResponse>> getDepartmentByListId(List<UUID> id) {
+        log.error("Doctor service is down. Returning default response");
         return null;
+    }
+
+    @Override
+    public String test() {
+        return "Fixed response";
     }
 }

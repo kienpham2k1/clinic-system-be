@@ -27,4 +27,7 @@ public interface DoctorClient {
 
     @PostMapping("/api/v1/departments/get-list")
     BaseResponse<List<DepartmentResponse>> getDepartmentByListId(@RequestBody List<UUID> id);
+
+    @GetMapping("/api/v1/test")
+    String test();
 }
