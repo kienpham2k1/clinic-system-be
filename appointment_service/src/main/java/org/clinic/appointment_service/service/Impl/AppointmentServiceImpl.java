@@ -1,6 +1,5 @@
 package org.clinic.appointment_service.service.Impl;
 
-import org.clinic.appointment_service.client.DepartmentClient;
 import org.clinic.appointment_service.client.DoctorClient;
 import org.clinic.appointment_service.client.PatientClient;
 import org.clinic.appointment_service.dto.request.AppointmentRequest;
@@ -36,8 +35,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private PatientClient patientClient;
 
-    @Autowired
-    private DepartmentClient departmentClient;
 
     @Override
     public Page<AppointmentResponse> getAppointmentByPage(Pageable pageable) {
@@ -51,7 +48,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         List<DoctorResponse> doctorResponses = doctorClient.getDoctorsByListId(new ArrayList<>(doctorIds)).getData();
         List<PatientResponse> patientResponses = patientClient.getPatientsByListId(new ArrayList<>(patientIds)).getData();
-        List<DepartmentResponse> departmentResponses = departmentClient.getDepartmentByListId(new ArrayList<>(departmentIds)).getData();
+        List<DepartmentResponse> departmentResponses = doctorClient.getDepartmentByListId(new ArrayList<>(departmentIds)).getData();
 
         Map<UUID, DoctorResponse> doctorMap = doctorResponses.stream()
                 .collect(Collectors.toMap(DoctorResponse::getId, d -> d));
