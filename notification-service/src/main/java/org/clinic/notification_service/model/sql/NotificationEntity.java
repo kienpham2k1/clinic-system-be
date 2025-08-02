@@ -28,6 +28,7 @@ public class NotificationEntity extends BaseEntity {
     @Column(name = SqlDatabaseConstant.NOTIFICATION__SUBJECT)
     private String subject;
     @Column(name = SqlDatabaseConstant.NOTIFICATION_MESSAGE)
+    @Lob
     private String message;
     @Column(name = SqlDatabaseConstant.NOTIFICATION_STATUS)
     private NotificationStatus status;

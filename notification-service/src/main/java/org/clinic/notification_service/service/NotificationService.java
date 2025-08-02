@@ -1,5 +1,6 @@
 package org.clinic.notification_service.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.clinic.notification_service.dto.request.NotificationRequest;
 import org.clinic.notification_service.dto.response.NotificationResponse;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ public interface NotificationService {
 
     NotificationResponse getNotificationById(UUID notificationId);
 
-    NotificationResponse insertNotification(NotificationRequest notificationRequest);
+    NotificationResponse insertNotification(NotificationRequest notificationRequest) throws JsonProcessingException;
 
     NotificationResponse updateNotification(UUID notificationId, NotificationRequest notificationRequest);
 

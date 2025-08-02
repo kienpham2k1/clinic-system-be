@@ -1,5 +1,6 @@
 package org.clinic.notification_service.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.clinic.common_service_web.constant.PageConstant;
 import org.clinic.notification_service.dto.request.NotificationRequest;
@@ -43,7 +44,7 @@ public class NotificationController {
     }
 
     @PostMapping
-    public ResponseEntity<NotificationResponse> insertNotification(@RequestBody NotificationRequest notificationRequest) {
+    public ResponseEntity<NotificationResponse> insertNotification(@RequestBody NotificationRequest notificationRequest) throws JsonProcessingException {
         return ResponseEntity.ok(notificationService.insertNotification(notificationRequest));
     }
 
