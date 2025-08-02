@@ -2,7 +2,7 @@ package org.clinic.appointment_service.client.fallback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.clinic.appointment_service.client.PatientClient;
-import org.clinic.common_service_web.dto.PatientResponse;
+import org.clinic.common_service_web.dto.response.PatientResponse;
 import org.clinic.common_service_web.wrapper.dto.BaseResponse;
 import org.springframework.stereotype.Component;
 

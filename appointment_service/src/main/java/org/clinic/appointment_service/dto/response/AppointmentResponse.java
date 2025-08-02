@@ -3,9 +3,9 @@ package org.clinic.appointment_service.dto.response;
 import lombok.*;
 import org.clinic.appointment_service.enums.Mode;
 import org.clinic.appointment_service.enums.Status;
-import org.clinic.common_service_web.dto.DepartmentResponse;
-import org.clinic.common_service_web.dto.DoctorResponse;
-import org.clinic.common_service_web.dto.PatientResponse;
+import org.clinic.common_service_web.dto.response.DepartmentResponse;
+import org.clinic.common_service_web.dto.response.DoctorResponse;
+import org.clinic.common_service_web.dto.response.PatientResponse;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

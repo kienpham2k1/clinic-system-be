@@ -1,0 +1,7 @@
+package org.clinic.notification_service.service.sender;
+
+import org.clinic.notification_service.model.NotificationEvent;
+
+public interface SmsSender {
+    void send(NotificationEvent event);
+}

@@ -1,4 +1,4 @@
-package org.clinic.common_service_web.dto;
+package org.clinic.common_service_web.dto.response;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PatientResponse {
+public class DoctorResponse {
     private UUID id;
     private String firstName;
     private String lastName;

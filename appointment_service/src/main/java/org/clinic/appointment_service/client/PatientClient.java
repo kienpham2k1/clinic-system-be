@@ -1,8 +1,7 @@
 package org.clinic.appointment_service.client;
 
-import org.clinic.appointment_service.client.fallback.DoctorClientFallback;
 import org.clinic.appointment_service.client.fallback.PatientClientFallback;
-import org.clinic.common_service_web.dto.PatientResponse;
+import org.clinic.common_service_web.dto.response.PatientResponse;
 import org.clinic.common_service_web.wrapper.dto.BaseResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

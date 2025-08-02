@@ -1,4 +1,4 @@
-package org.clinic.common_service_web.dto;
+package org.clinic.common_service_web.dto.response;
 
 import lombok.*;
 import org.clinic.common_service_web.enums.DepartmentStatus;
