@@ -1,7 +1,6 @@
 package org.clinic.notification_service.dto.request;
 
 import lombok.*;
-import org.clinic.notification_service.enums.NotificationStatus;
 import org.clinic.notification_service.enums.NotificationType;
 
 import java.io.Serializable;

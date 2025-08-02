@@ -7,5 +7,6 @@ import java.util.UUID;
 
 public interface KafkaProducerService {
     void sendNotification(NotificationEvent event);
+
     void sendNotification(OutboxMessageEntity outbox, UUID kafkaMessageId);
 }

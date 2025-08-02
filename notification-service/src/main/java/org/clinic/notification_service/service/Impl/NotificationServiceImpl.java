@@ -10,12 +10,11 @@ import org.clinic.notification_service.dto.response.NotificationResponse;
 import org.clinic.notification_service.enums.EventType;
 import org.clinic.notification_service.enums.NotificationStatus;
 import org.clinic.notification_service.enums.OutboxStatus;
+import org.clinic.notification_service.kafka.KafkaProducerService;
 import org.clinic.notification_service.mapper.NotificationMapper;
-import org.clinic.notification_service.model.NotificationEvent;
 import org.clinic.notification_service.model.sql.NotificationEntity;
 import org.clinic.notification_service.model.sql.OutboxMessageEntity;
 import org.clinic.notification_service.repository.NotificationRepository;
-import org.clinic.notification_service.kafka.KafkaProducerService;
 import org.clinic.notification_service.repository.OutboxMessageRepository;
 import org.clinic.notification_service.service.NotificationService;
 import org.springframework.data.domain.Page;
@@ -34,6 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final OutboxMessageRepository outboxMessageRepository;
     private final ObjectMapper objectMapper;
     private final KafkaProducerService kafkaProducerService;
+
     @Override
     public Page<NotificationResponse> getNotificationByPage(Pageable pageable) {
         var notificationEntityPage = notificationRepository.findAll(pageable);
