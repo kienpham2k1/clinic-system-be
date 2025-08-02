@@ -22,6 +22,9 @@ public class OutboxMessageEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = SqlDatabaseConstant.OUTBOX_MESSAGE_KAFKA_MESSAGE_ID)
+    private UUID kafkaId;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = SqlDatabaseConstant.OUTBOX_MESSAGE_EVENT_TYPE)
     private EventType eventType;

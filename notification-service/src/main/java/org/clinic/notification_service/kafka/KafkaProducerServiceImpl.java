@@ -20,7 +20,7 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
     }
 
     @Override
-    public void sendNotification(OutboxMessageEntity outbox) {
-        kafkaTemplateOutbox.send("notification-events", outbox.getId().toString(), outbox.getPayload());
+    public void sendNotification(OutboxMessageEntity outbox, UUID kafkaMessageId) {
+        kafkaTemplateOutbox.send("notification-events", kafkaMessageId.toString(), outbox.getPayload());
     }
 }

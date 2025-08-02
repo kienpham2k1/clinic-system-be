@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
@@ -21,8 +22,10 @@ public class KafkaScheduled {
         List<OutboxMessageEntity> messages = outboxMessageRepository.findByStatus(OutboxStatus.PENDING);
         for (OutboxMessageEntity msg : messages) {
             try {
-                kafkaProducerService.sendNotification(msg);
+                UUID kafkaId = UUID.randomUUID();
+                kafkaProducerService.sendNotification(msg, kafkaId);
                 msg.setStatus(OutboxStatus.SENT);
+                msg.setKafkaId(kafkaId);
             } catch (Exception e) {
                 msg.setStatus(OutboxStatus.FAILED);
             }

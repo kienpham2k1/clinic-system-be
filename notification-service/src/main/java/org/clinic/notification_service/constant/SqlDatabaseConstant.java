@@ -21,4 +21,5 @@ public class SqlDatabaseConstant {
     public static final String INBOX_MESSAGE_ID = "inbox_message_id";
     public static final String INBOX_MESSAGE_MESSAGE_ID = "message_id";
     public static final String INBOX_MESSAGE_PAYLOAD = "payload";
+    public static final String OUTBOX_MESSAGE_KAFKA_MESSAGE_ID = "kafka_message_id";
 }
