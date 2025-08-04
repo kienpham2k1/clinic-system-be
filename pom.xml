@@ -15,7 +15,9 @@
         <module>common-security</module>
         <module>common-service</module>
         <module>common-service-web-reactive</module>
-        <!--        <module>auth-service</module>-->
+        <module>eureka-server</module>
+        <module>config-server</module>
+                <module>auth-service</module>
         <!-- <module>user-service</module> -->
         <!-- <module>appointment-service</module> -->
     </modules>

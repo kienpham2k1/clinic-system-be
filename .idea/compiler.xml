@@ -7,9 +7,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="config-server" />
         <module name="api-gateway" />
-        <module name="eureka-server" />
+      </profile>
+      <profile name="Annotation profile for auth-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="auth-service" />
       </profile>
       <profile name="Annotation profile for notification-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -23,7 +38,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
         <module name="notification-service" />
-        <module name="auth-service" />
         <module name="doctor-service" />
       </profile>
       <profile name="Annotation profile for patient-service" enabled="true">
@@ -53,7 +67,9 @@
         </processorPath>
         <module name="common-security" />
         <module name="common-service-web-reactive" />
+        <module name="config-server" />
         <module name="common-service" />
+        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -68,10 +84,10 @@
       <module name="common-security" options="-Amapstruct.defaultComponentModel=spring" />
       <module name="common-service" options="-Amapstruct.defaultComponentModel=spring" />
       <module name="common-service-web-reactive" options="-Amapstruct.defaultComponentModel=spring" />
-      <module name="config-server" options="-parameters" />
+      <module name="config-server" options="-Amapstruct.defaultComponentModel=spring" />
       <module name="demo" options="-parameters" />
       <module name="doctor-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
-      <module name="eureka-server" options="-parameters" />
+      <module name="eureka-server" options="-Amapstruct.defaultComponentModel=spring" />
       <module name="notification-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="patient-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
     </option>
