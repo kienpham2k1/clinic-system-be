@@ -23,6 +23,7 @@
         <module>doctor-service</module>
         <module>notification-service</module>
         <module>patient-service</module>
+        <module>storage-service</module>
     </modules>
 
     <properties>
