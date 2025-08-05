@@ -12,9 +12,9 @@
     <name>Clinic System - Parent</name>
 
     <modules>
-        <module>common-security</module>
-        <module>common-service</module>
-        <module>common-service-web-reactive</module>
+<!--        <module>common-security</module>-->
+<!--        <module>common-service</module>-->
+<!--        <module>common-service-web-reactive</module>-->
         <module>eureka-server</module>
         <module>config-server</module>
         <module>auth-service</module>
