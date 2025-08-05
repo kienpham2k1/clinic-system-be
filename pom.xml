@@ -19,7 +19,7 @@
         <module>config-server</module>
         <module>auth-service</module>
         <module>api-gateway</module>
-        <module>appointment_service</module>
+        <module>appointment-service</module>
         <module>doctor-service</module>
         <module>notification-service</module>
         <module>patient-service</module>
