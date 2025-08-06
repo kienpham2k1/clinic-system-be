@@ -52,14 +52,14 @@ public class MinIOFileController {
         }
     }
 
-//    @GetMapping("/url/{filename}")
-//    public ResponseEntity<String> getPresignedUrl(@PathVariable String filename) {
-//        try {
-//            String url = storageService.generatePresignedUrl(filename);
-//            return ResponseEntity.ok(url);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body("Failed to get URL: " + e.getMessage());
-//        }
-//    }
+    @GetMapping("/url/{filename}")
+    public ResponseEntity<String> getPresignedUrl(@PathVariable(name = "filename") String filename) {
+        try {
+            String url = storageService.generatePresignedUrl(filename);
+            return ResponseEntity.ok(url);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to get URL: " + e.getMessage());
+        }
+    }
 }
