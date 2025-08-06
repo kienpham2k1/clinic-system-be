@@ -6,3 +6,4 @@ minio:
   access-key: minioadmin
   secret-key: minioadmin
   bucket: clinic-files
+  public-url: http://localhost:9000

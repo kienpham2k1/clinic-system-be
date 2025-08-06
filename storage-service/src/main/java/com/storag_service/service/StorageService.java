@@ -31,6 +31,9 @@ public class StorageService {
     @Value("${minio.bucket}")
     private String bucketName;
 
+    @Value("${minio.public-url}")
+    private String publicUrl;
+
     public String uploadFile(MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
 
@@ -42,7 +45,7 @@ public class StorageService {
 
         s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
 
-        return fileName;
+        return publicUrl + ":/" + bucketName + "/" + fileName;
     }
 
     public byte[] downloadFile(String fileName) {
@@ -66,8 +69,6 @@ public class StorageService {
     }
 
     public String generatePresignedUrl(String fileName) {
-
-
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
