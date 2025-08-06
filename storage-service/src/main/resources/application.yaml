@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: storage-service
+minio:
+  endpoint: http://0.0.0.0:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket: clinic-files
