@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.clinic.common_service_web.audit.sql.BaseEntity;
 import org.clinic.notification_service.constant.SqlDatabaseConstant;
+import org.clinic.notification_service.enums.InboxStatus;
 
 import java.util.UUID;
 
@@ -26,4 +27,6 @@ public class InboxMessageEntity extends BaseEntity {
     @Column(name = SqlDatabaseConstant.INBOX_MESSAGE_PAYLOAD)
     @Lob
     private String payload;
+
+    private InboxStatus status;
 }
