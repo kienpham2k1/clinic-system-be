@@ -7,20 +7,21 @@ import org.clinic.common_service_web.exception.NotFoundException;
 import org.clinic.common_service_web.localeTimeZone.service.MessageService;
 import org.clinic.notification_service.dto.request.NotificationRequest;
 import org.clinic.notification_service.dto.response.NotificationResponse;
-import org.clinic.notification_service.enums.EventType;
+import org.clinic.notification_service.enums.AggregateType;
 import org.clinic.notification_service.enums.NotificationStatus;
 import org.clinic.notification_service.enums.OutboxStatus;
-import org.clinic.notification_service.kafka.KafkaProducerService;
 import org.clinic.notification_service.mapper.NotificationMapper;
 import org.clinic.notification_service.model.sql.NotificationEntity;
-import org.clinic.notification_service.model.sql.OutboxMessageEntity;
+import org.clinic.notification_service.model.sql.OutboxEventEntity;
 import org.clinic.notification_service.repository.NotificationRepository;
-import org.clinic.notification_service.repository.OutboxMessageRepository;
+import org.clinic.notification_service.repository.OutboxEventRepository;
 import org.clinic.notification_service.service.NotificationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,9 +31,8 @@ import java.util.UUID;
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final MessageService messageService;
-    private final OutboxMessageRepository outboxMessageRepository;
+    private final OutboxEventRepository outboxEventRepository;
     private final ObjectMapper objectMapper;
-    private final KafkaProducerService kafkaProducerService;
 
     @Override
     public Page<NotificationResponse> getNotificationByPage(Pageable pageable) {
@@ -56,14 +56,17 @@ public class NotificationServiceImpl implements NotificationService {
         NotificationEntity notificationEntity = NotificationMapper.INSTANCE.toEntity(notificationRequest);
         notificationEntity.setStatus(NotificationStatus.PENDING);
         notificationEntity.setMetadata(metadata);
-        notificationRepository.save(notificationEntity);
+        NotificationEntity nE = notificationRepository.save(notificationEntity);
         String payload = objectMapper.writeValueAsString(notificationRequest);
-        OutboxMessageEntity outbox = OutboxMessageEntity.builder()
-                .eventType(EventType.COMMON_NOTIFICATION)
+        OutboxEventEntity outbox = OutboxEventEntity.builder()
+                .aggregateType(AggregateType.COMMON_NOTIFICATION)
+                .aggregateId(nE.getId())
                 .payload(payload)
                 .status(OutboxStatus.PENDING)
+                .createdAt(LocalDateTime.now())
+                .topic("notification")
                 .build();
-        outboxMessageRepository.save(outbox);
+        outboxEventRepository.save(outbox);
         return NotificationMapper.INSTANCE.toDtoResponse(notificationEntity);
     }
 
@@ -101,5 +104,12 @@ public class NotificationServiceImpl implements NotificationService {
         notificationEntity.setStatus(NotificationStatus.READ);
         notificationRepository.save(notificationEntity);
         return NotificationMapper.INSTANCE.toDtoResponse(notificationEntity);
+    }
+
+    @Override
+    public void updateStatus(UUID eventId, NotificationStatus notificationStatus, Instant now, int i) {
+        NotificationEntity n = notificationRepository.findById(eventId).orElseThrow();
+        n.setStatus(notificationStatus);
+        notificationRepository.save(n);
     }
 }

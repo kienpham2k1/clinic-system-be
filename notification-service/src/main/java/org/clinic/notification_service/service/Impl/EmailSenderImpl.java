@@ -1,13 +1,14 @@
-package org.clinic.notification_service.service.Impl.sender;
+package org.clinic.notification_service.service.Impl;
 
 import lombok.AllArgsConstructor;
 import org.clinic.notification_service.model.NotificationEvent;
-import org.clinic.notification_service.service.sender.PushNotificationSender;
+import org.clinic.notification_service.service.EmailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class PushNotificationSenderImpl implements PushNotificationSender {
+public class EmailSenderImpl implements EmailSender {
+    @Override
     public void send(NotificationEvent event) {
 
     }

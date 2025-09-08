@@ -2,21 +2,21 @@ package org.clinic.notification_service.service.Impl;
 
 import lombok.AllArgsConstructor;
 import org.clinic.notification_service.model.NotificationEvent;
-import org.clinic.notification_service.service.NotificationActService;
-import org.clinic.notification_service.service.sender.EmailSender;
-import org.clinic.notification_service.service.sender.PushNotificationSender;
-import org.clinic.notification_service.service.sender.SmsSender;
+import org.clinic.notification_service.service.EmailSender;
+import org.clinic.notification_service.service.NotificationDirectService;
+import org.clinic.notification_service.service.SmsSender;
+import org.clinic.notification_service.service.SocketSender;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class NotificationActServiceImpl implements NotificationActService {
+public class NotificationDirectServiceImpl implements NotificationDirectService {
     private final EmailSender emailSender;
     private final SmsSender smsSender;
-    private final PushNotificationSender pushSender;
+    private final SocketSender pushSender;
 
     @Override
-    public void act(NotificationEvent event) {
+    public void directSend(NotificationEvent event) {
         switch (event.getType()) {
             case EMAIL -> emailSender.send(event);
             case SMS -> smsSender.send(event);

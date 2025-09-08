@@ -1,7 +1,7 @@
-package org.clinic.notification_service.service.sender;
+package org.clinic.notification_service.service;
 
 import org.clinic.notification_service.model.NotificationEvent;
 
-public interface PushNotificationSender {
+public interface EmailSender {
     void send(NotificationEvent event);
 }

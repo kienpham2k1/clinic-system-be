@@ -1,5 +1,5 @@
 package org.clinic.notification_service.enums;
 
-public enum EventType {
+public enum AggregateType {
     COMMON_NOTIFICATION,
 }

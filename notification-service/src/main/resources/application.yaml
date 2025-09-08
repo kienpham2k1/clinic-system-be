@@ -20,6 +20,8 @@ spring:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
   kafka:
     bootstrap-servers: ${KAFKA_SERVER_ENDPOINT:localhost:9092}
+    listener:
+      ack-mode: manual
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -29,6 +31,13 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: '*'
+app:
+  kafka:
+    retry:
+      max-attempts: 4   # tổng số lần (including first attempt)
+      initial-interval-ms: 1000
+      multiplier: 2.0
+      max-interval-ms: 10000
 eureka:
   client:
     service-url:

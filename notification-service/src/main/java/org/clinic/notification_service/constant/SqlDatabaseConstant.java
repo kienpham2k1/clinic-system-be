@@ -10,16 +10,24 @@ public class SqlDatabaseConstant {
     public static final String NOTIFICATION_MESSAGE = "message";
     public static final String NOTIFICATION_STATUS = "status";
     public static final String NOTIFICATION_METADATA = "metadata";
-    //TABLE OUTBOX_MESSAGE
-    public static final String OUTBOX_MESSAGE = "tbl_outbox_message";
-    public static final String OUTBOX_MESSAGE_ID = "outbox_message_id";
-    public static final String OUTBOX_MESSAGE_EVENT_TYPE = "event_type";
-    public static final String OUTBOX_MESSAGE_PAYLOAD = "payload";
-    public static final String OUTBOX_MESSAGE_STATUS = "status";
-    //TABLE INBOX_MESSAGE
-    public static final String INBOX_MESSAGE = "tbl_inbox_message";
-    public static final String INBOX_MESSAGE_ID = "inbox_message_id";
-    public static final String INBOX_MESSAGE_MESSAGE_ID = "message_id";
-    public static final String INBOX_MESSAGE_PAYLOAD = "payload";
-    public static final String OUTBOX_MESSAGE_KAFKA_MESSAGE_ID = "kafka_message_id";
+    //TABLE INBOX_EVENT
+    public static final String OUTBOX_EVENT = "tbl_outbox_event";
+    public static final String OUTBOX_EVENT_ID = "outbox_event_id";
+    public static final String OUTBOX_EVENT_PAYLOAD = "payload";
+    public static final String OUTBOX_EVENT_STATUS = "status";
+    public static final String OUTBOX_EVENT_AGGREGATE_ID = "aggregate_id";
+    public static final String OUTBOX_EVENT_AGGREGATE_TYPE = "aggregate_type";
+    public static final String OUTBOX_EVENT_TOPIC= "topic";
+    public static final String OUTBOX_EVENT_KEY= "key";
+    public static final String OUTBOX_EVENT_CREATED_AT= "created_at";
+    public static final String OUTBOX_EVENT_SENT_AT= "sent_at";
+    //TABLE INBOX_EVENT
+    public static final String INBOX_EVENT = "tbl_inbox_event";
+    public static final String INBOX_EVENT_ID = "inbox_event_id";
+    public static final String INBOX_EVENT_AGGREGATE_ID = "aggregate_id";
+    public static final String INBOX_EVENT_PAYLOAD = "payload";
+    public static final String INBOX_EVENT_RECEIVED_AT = "received_at";
+    public static final String INBOX_EVENT_PROCESSED_AT = "processed_at";
+    public static final String INBOX_EVENT_STATUS = "status";
+    public static final String INBOX_EVENT_RETRIES = "retries";
 }
