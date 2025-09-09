@@ -2,6 +2,7 @@ package org.clinic.notification_service.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -19,6 +20,7 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,6 +40,7 @@ public class NotificationConsumeImpl implements NotificationConsumer {
 
 
     @KafkaListener(topics = "${kafka.topic.notification.name:notification}", groupId = "${kafka.topic.notification.group:notification-groups}")
+//    @Transactional
     public void consume(
             ConsumerRecord<String, String> record,
             Acknowledgment ack
@@ -48,9 +51,14 @@ public class NotificationConsumeImpl implements NotificationConsumer {
         String payload = record.value();
         if (eventType == null) eventType = "UNKNOWN";
         // 2) Insert vào inbox (RECEIVED). Nếu đã tồn tại -> skip xử lý (idempotent)
-        InboxEventEntity ibE = new InboxEventEntity(aggregateId, payload, InboxStatus.RECEIVED);
+        Optional<InboxEventEntity> exists = inboxEventRepository.findByAggregateId(aggregateId);
         try {
-            inboxEventRepository.save(ibE);
+            if (exists.isPresent() && exists.get().getStatus().equals(InboxStatus.PROCESSED)) {
+                throw new DataIntegrityViolationException("Duplicate key found in inbox event");
+            } else if(exists.isEmpty()) {
+                InboxEventEntity ibE = new InboxEventEntity(aggregateId, payload, InboxStatus.RECEIVED);
+                inboxEventRepository.save(ibE);
+            }
         } catch (DataIntegrityViolationException dup) {
             ack.acknowledge();
             return;
@@ -64,9 +72,10 @@ public class NotificationConsumeImpl implements NotificationConsumer {
             // 4) Đánh dấu PROCESSED
             notificationService.updateStatus(aggregateId, NotificationStatus.SENT, Instant.now(), 0);
             // 5) Update Inbox event
-            ibE.setStatus(InboxStatus.PROCESSED);
-            ibE.setProcessedAt(Instant.now());
-            inboxEventRepository.save(ibE);
+            exists = inboxEventRepository.findByAggregateId(aggregateId);
+            exists.get().setStatus(InboxStatus.PROCESSED);
+            exists.get().setProcessedAt(Instant.now());
+            inboxEventRepository.save(exists.get());
             // 6) Commit offset sau khi DB commit thành công (vì @Transactional)
             ack.acknowledge();
 
@@ -76,6 +85,7 @@ public class NotificationConsumeImpl implements NotificationConsumer {
             e.setStatus(InboxStatus.FAILED);
             e.setRetries(e.getRetries() + 1);
             inboxEventRepository.save(e);
+            log.error("Error while consume notification event", ex);
 
             // ném RuntimeException để Spring Kafka trigger retry/DLT theo config (nếu dùng DefaultErrorHandler)
             throw ex;
