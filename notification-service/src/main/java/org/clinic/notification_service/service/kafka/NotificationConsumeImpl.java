@@ -72,7 +72,7 @@ public class NotificationConsumeImpl implements NotificationConsumer {
 
         } catch (Exception ex) {
             // 7) Đánh dấu FAILED + tăng retries (để retry về sau hoặc DLT)
-            var e = inboxEventRepository.findByEventId(aggregateId).orElseThrow();
+            var e = inboxEventRepository.findByAggregateId(aggregateId).orElseThrow();
             e.setStatus(InboxStatus.FAILED);
             e.setRetries(e.getRetries() + 1);
             inboxEventRepository.save(e);

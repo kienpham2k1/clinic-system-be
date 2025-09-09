@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface InboxEventRepository extends JpaRepository<InboxEventEntity, UUID> {
 
-    Optional<InboxEventEntity> findByEventId(UUID eventId);
+    Optional<InboxEventEntity> findByAggregateId(UUID aggregateId);
 
     @Modifying
     @Query("update InboxEventEntity e set e.status = :status, e.processedAt = :processedAt, e.retries = :retries where e.eventId = :eventId")
