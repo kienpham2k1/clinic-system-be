@@ -11,25 +11,22 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 @AllArgsConstructor
-public class OutboxPublisher  {
+public class OutboxPublisher {
     private final OutboxEventRepository outboxEventRepository;
     private final NotificationPublisher notificationPublisher;
 
-    @Scheduled(fixedDelayString = "${outbox.poll-ms:5000}")
+    @Scheduled(fixedDelayString = "${app.kafka.outbox.poll-ms:5000}")
     @Transactional
     public void publishPending() {
         List<OutboxEventEntity> events = outboxEventRepository.findPending();
         for (OutboxEventEntity e : events) {
             try {
-                UUID aggregateId = e.getAggregateId();
                 e.setStatus(OutboxStatus.SENT);
-                e.setAggregateId(aggregateId);
                 e.setSendAt(LocalDateTime.now());
-                notificationPublisher.publishNotificationEvent(e, aggregateId);
+                notificationPublisher.publishNotificationEvent(e, e.getAggregateId());
             } catch (Exception ex) {
                 e.setStatus(OutboxStatus.FAILED);
             }

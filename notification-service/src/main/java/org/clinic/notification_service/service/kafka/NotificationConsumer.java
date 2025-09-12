@@ -6,8 +6,6 @@ import org.clinic.notification_service.model.NotificationEvent;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 
 public interface NotificationConsumer {

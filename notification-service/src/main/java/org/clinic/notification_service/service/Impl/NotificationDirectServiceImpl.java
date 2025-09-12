@@ -17,11 +17,12 @@ public class NotificationDirectServiceImpl implements NotificationDirectService 
 
     @Override
     public void directSend(NotificationEvent event) {
-        switch (event.getType()) {
-            case EMAIL -> emailSender.send(event);
-            case SMS -> smsSender.send(event);
-            case PUSH -> pushSender.send(event);
-            default -> throw new IllegalArgumentException("Unknown type: " + event.getType());
-        }
+        throw new UnsupportedOperationException("Not supported yet.");
+//        switch (event.getType()) {
+//            case EMAIL -> emailSender.send(event);
+//            case SMS -> smsSender.send(event);
+//            case PUSH -> pushSender.send(event);
+//            default -> throw new IllegalArgumentException("Unknown type: " + event.getType());
+//        }
     }
 }

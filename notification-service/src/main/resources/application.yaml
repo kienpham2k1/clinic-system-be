@@ -38,6 +38,13 @@ app:
       initial-interval-ms: 1000
       multiplier: 2.0
       max-interval-ms: 10000
+    notification:
+      topic: notification
+      group: notification-groups
+      topic.dlt: notification.dlt
+      group.dlt: notification-groups.dlt
+    outbox:
+      poll-ms: 5000 #ms
 eureka:
   client:
     service-url:

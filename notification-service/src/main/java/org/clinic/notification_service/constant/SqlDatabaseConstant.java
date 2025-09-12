@@ -17,10 +17,10 @@ public class SqlDatabaseConstant {
     public static final String OUTBOX_EVENT_STATUS = "status";
     public static final String OUTBOX_EVENT_AGGREGATE_ID = "aggregate_id";
     public static final String OUTBOX_EVENT_AGGREGATE_TYPE = "aggregate_type";
-    public static final String OUTBOX_EVENT_TOPIC= "topic";
-    public static final String OUTBOX_EVENT_KEY= "key";
-    public static final String OUTBOX_EVENT_CREATED_AT= "created_at";
-    public static final String OUTBOX_EVENT_SENT_AT= "sent_at";
+    public static final String OUTBOX_EVENT_TOPIC = "topic";
+    public static final String OUTBOX_EVENT_KEY = "key";
+    public static final String OUTBOX_EVENT_CREATED_AT = "created_at";
+    public static final String OUTBOX_EVENT_SENT_AT = "sent_at";
     //TABLE INBOX_EVENT
     public static final String INBOX_EVENT = "tbl_inbox_event";
     public static final String INBOX_EVENT_ID = "inbox_event_id";

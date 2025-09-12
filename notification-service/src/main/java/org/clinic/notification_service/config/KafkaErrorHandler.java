@@ -12,7 +12,7 @@ import org.springframework.util.backoff.ExponentialBackOff;
 public class KafkaErrorHandler {
     @Bean
     public DefaultErrorHandler errorHandler(KafkaTemplate<Object, Object> template) {
-         DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(template,
+        DeadLetterPublishingRecoverer recoverer = new DeadLetterPublishingRecoverer(template,
                 (record, ex) -> {
                     // route đến <topic>.DLT giữ nguyên partition
                     return new TopicPartition(record.topic() + ".dlt", record.partition());

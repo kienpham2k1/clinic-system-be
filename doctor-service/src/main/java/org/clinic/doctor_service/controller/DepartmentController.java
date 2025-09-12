@@ -3,7 +3,6 @@ package org.clinic.doctor_service.controller;
 import org.clinic.common_service_web.constant.PageConstant;
 import org.clinic.doctor_service.dto.request.DepartmentRequest;
 import org.clinic.doctor_service.dto.response.DepartmentResponse;
-import org.clinic.doctor_service.dto.response.DoctorResponse;
 import org.clinic.doctor_service.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

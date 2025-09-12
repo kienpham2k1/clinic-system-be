@@ -2,7 +2,6 @@ package org.clinic.notification_service.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -32,14 +31,14 @@ public class NotificationConsumeImpl implements NotificationConsumer {
     private final NotificationService notificationService;
     private final ObjectMapper objectMapper;
 
-    @KafkaListener(topics = "${kafka.topic.notification.name:notification}", groupId = "${kafka.topic.notification.group:notification}")
+    @KafkaListener(topics = "${app.kafka.notification.topic:notification}", groupId = "${app.kafka.notification.group:notification-groups}")
     public void consume(NotificationEvent event) {
         log.info("Received notification event: {}", event);
         notificationDirectService.directSend(event);
     }
 
 
-    @KafkaListener(topics = "${kafka.topic.notification.name:notification}", groupId = "${kafka.topic.notification.group:notification-groups}")
+    @KafkaListener(topics = "${app.kafka.notification.topic:notification}", groupId = "${app.kafka.notification.group:notification-groups}")
 //    @Transactional
     public void consume(
             ConsumerRecord<String, String> record,
@@ -55,7 +54,7 @@ public class NotificationConsumeImpl implements NotificationConsumer {
         try {
             if (exists.isPresent() && exists.get().getStatus().equals(InboxStatus.PROCESSED)) {
                 throw new DataIntegrityViolationException("Duplicate key found in inbox event");
-            } else if(exists.isEmpty()) {
+            } else if (exists.isEmpty()) {
                 InboxEventEntity ibE = new InboxEventEntity(aggregateId, payload, InboxStatus.RECEIVED);
                 inboxEventRepository.save(ibE);
             }
