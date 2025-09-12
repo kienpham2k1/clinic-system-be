@@ -65,6 +65,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .status(OutboxStatus.PENDING)
                 .createdAt(LocalDateTime.now())
                 .topic("notification")
+                .key(nE.getId().toString())
                 .build();
         outboxEventRepository.save(outbox);
         return NotificationMapper.INSTANCE.toDtoResponse(notificationEntity);

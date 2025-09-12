@@ -30,4 +30,18 @@ public class SqlDatabaseConstant {
     public static final String INBOX_EVENT_PROCESSED_AT = "processed_at";
     public static final String INBOX_EVENT_STATUS = "status";
     public static final String INBOX_EVENT_RETRIES = "retries";
+    //TABLE DTL_EVENT
+    public static final String DLT_EVENT = "tbl_dlt_event";
+    public static final String DLT_EVENT_ID = "dlt_event_id";
+    public static final String DLT_EVENT_ORIGINAL_TOPIC = "original_topic";
+    public static final String DLT_EVENT_ORIGINAL_PARTITION = "original_partition";
+    public static final String DLT_EVENT_ORIGINAL_OFFSET = "original_offset";
+    public static final String DLT_EVENT_KEY = "key";
+    public static final String DLT_EVENT_PAYLOAD = "payload";
+    public static final String DLT_EVENT_EXCEPTION_CLASS= "exception_class";
+    public static final String DLT_EVENT_EXCEPTION_MESSAGE= "exception_message";
+    public static final String DLT_EVENT_STACKTRACE= "stacktrace";
+    public static final String DLT_EVENT_RECEIVED_AT= "received_at";
+    public static final String DLT_EVENT_REPLAYED= "replayed";
+
 }
