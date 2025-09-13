@@ -1,4 +1,4 @@
-package com.storag_service.config;
+package com.storage_service.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,15 +12,15 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import java.net.URI;
 
 @Configuration
-public class MinioConfig {
+public class SeaweedsConfig {
 
-    @Value("${minio.endpoint}")
+    @Value("${seaweeds.endpoint}")
     private String endpoint;
 
-    @Value("${minio.access-key}")
+    @Value("${seaweeds.access-key}")
     private String accessKey;
 
-    @Value("${minio.secret-key}")
+    @Value("${seaweeds.secret-key}")
     private String secretKey;
 
     @Bean

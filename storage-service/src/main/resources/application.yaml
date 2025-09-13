@@ -1,3 +1,5 @@
+server:
+  port: 8095
 spring:
   application:
     name: storage-service
@@ -5,5 +7,11 @@ minio:
   endpoint: http://0.0.0.0:9000
   access-key: minioadmin
   secret-key: minioadmin
+  bucket: clinic-files
+  public-url: http://localhost:9000
+seaweeds:
+  endpoint: http://0.0.0.0:8333
+  access-key: any
+  secret-key: any
   bucket: clinic-files
   public-url: http://localhost:9000

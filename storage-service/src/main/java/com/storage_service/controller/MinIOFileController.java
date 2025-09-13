@@ -1,6 +1,7 @@
-package com.storag_service.controller;
+package com.storage_service.controller;
 
-import com.storag_service.service.StorageService;
+import com.storage_service.service.MinIOStorageService;
+import com.storage_service.service.SeaweedsStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class MinIOFileController {
 
-    private final StorageService storageService;
+    private final SeaweedsStorageService storageService;
 
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {

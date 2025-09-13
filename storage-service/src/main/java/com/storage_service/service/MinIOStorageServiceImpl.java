@@ -1,4 +1,4 @@
-package com.storag_service.service;
+package com.storage_service.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class StorageService {
+public class MinIOStorageServiceImpl implements MinIOStorageService {
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
 
