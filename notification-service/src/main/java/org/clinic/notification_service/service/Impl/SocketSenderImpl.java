@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SocketSenderImpl implements SocketSender {
     public void send(NotificationEvent event) {
-
+throw new UnsupportedOperationException("Not supported yet.");
     }
 }

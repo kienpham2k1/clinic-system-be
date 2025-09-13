@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 public class SmsSenderImpl implements SmsSender {
     @Override
     public void send(NotificationEvent notificationRequest) {
-
+    throw new UnsupportedOperationException("Not supported yet.");
     }
 }
