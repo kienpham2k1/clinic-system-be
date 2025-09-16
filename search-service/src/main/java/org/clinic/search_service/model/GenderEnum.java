@@ -1,4 +1,5 @@
 package org.clinic.search_service.model;
 
 public enum GenderEnum {
+    MALE, FEMALE
 }
