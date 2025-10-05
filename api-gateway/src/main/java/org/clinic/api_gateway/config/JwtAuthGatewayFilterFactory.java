@@ -46,7 +46,7 @@ public class JwtAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Jw
 
             try {
                 String token = authHeader.substring(7);
-                String redisKey = "auth:token" + token;
+                String redisKey = "auth:" + token;
                 String userId;
                 String username = "anonymous";
                 boolean accessDenied = true;
