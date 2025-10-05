@@ -15,6 +15,7 @@ services:
       - patient_db_data:/var/lib/postgresql/data
     networks:
       - clinic-network
+    restart: unless-stopped
 
   patient-service:
     build: .

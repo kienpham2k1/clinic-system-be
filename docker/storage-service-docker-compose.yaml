@@ -22,6 +22,7 @@ services:
     ports:
       - "9333:9333"   # master web UI + API
       - "19333:19333" # master gRPC
+    restart: unless-stopped
     networks:
       - seaweednet
 
@@ -34,6 +35,7 @@ services:
     ports:
       - "8080:8080"     # volume server REST API
       - "18080:18080"   # volume gRPC
+    restart: unless-stopped
     depends_on:
       - master
     networks:
@@ -46,6 +48,7 @@ services:
     ports:
       - "8888:8888"   # filer REST API
       - "18888:18888" # filer gRPC
+    restart: unless-stopped
     depends_on:
       - master
       - volume
@@ -58,6 +61,7 @@ services:
     command: "s3 -port=8333 -filer=filer:8888   -config=/etc/seaweedfs/config.json"
     volumes:
       - ./config/s3/config.json:/etc/seaweedfs/config.json
+    restart: unless-stopped
     ports:
       - "8333:8333"
     depends_on:
