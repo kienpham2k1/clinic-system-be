@@ -12,5 +12,4 @@ public interface SeaweedsStorageService {
     void deleteFile(String fileName);
 
     String generatePresignedUrl(String fileName);
-
 }

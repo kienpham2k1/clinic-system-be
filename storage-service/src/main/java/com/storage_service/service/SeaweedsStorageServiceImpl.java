@@ -18,47 +18,43 @@ import java.time.Duration;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class SeaweedsStorageServiceImpl implements SeaweedsStorageService {
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
 
-    @Value("${seaweeds.bucket}")
+    @Value("${seaweed.s3.bucket}")
     private String bucketName;
 
-    @Value("${seaweeds.public-url}")
+    @Value("${seaweed.s3.public-url}")
     private String publicUrl;
 
-    public String uploadFile(MultipartFile file) throws IOException {
-//        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
-//
-//        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-//                .bucket(bucketName)
-//                .key(fileName)
-//                .contentType(file.getContentType())
-//                .build();
-//
-//        s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
-//
-//        return publicUrl + ":/" + bucketName + "/" + fileName;
+    public SeaweedsStorageServiceImpl(@Qualifier("seaweedsClient") S3Client s3Client, S3Presigner s3Presigner) {
+        this.s3Client = s3Client;
+        this.s3Presigner = s3Presigner;
+    }
 
-        try {
-            // Gửi request list bucket để test kết nối
-            ListBucketsResponse response = s3Client.listBuckets(ListBucketsRequest.builder().build());
-
-            System.out.println("✅ Connected to SeaweedFS S3!");
-            System.out.println("Buckets available:");
-            response.buckets().forEach(bucket ->
-                    System.out.println(" - " + bucket.name())
-            );
-
-        } catch (Exception e) {
-            System.err.println("❌ Cannot connect to SeaweedFS S3!");
-            e.printStackTrace();
-        } finally {
-            s3Client.close();
+    public void createBucketIfNotExists() {
+        boolean exists = s3Client.listBuckets().buckets()
+                .stream()
+                .anyMatch(b -> b.name().equals(bucketName));
+        if (!exists) {
+            s3Client.createBucket(CreateBucketRequest.builder().bucket(bucketName).build());
         }
-        return "";
+    }
+
+    public String uploadFile(MultipartFile file) throws IOException {
+        createBucketIfNotExists();
+        String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .contentType(file.getContentType())
+                .build();
+
+        s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
+
+        return publicUrl + ":/buckets/" + bucketName + "/" + fileName;
     }
 
     public byte[] downloadFile(String fileName) {

@@ -14,5 +14,6 @@ seaweed:
     endpoint: http://localhost:8333
     access-key: admin
     secret-key: admin123
-    bucket: my-bucket
+    bucket: clinic-files
+    public-url: http://localhost:8888
 

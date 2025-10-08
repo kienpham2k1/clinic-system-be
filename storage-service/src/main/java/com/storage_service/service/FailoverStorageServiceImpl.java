@@ -8,7 +8,7 @@ import java.io.IOException;
 
 @Service
 @AllArgsConstructor
-public class FailoverStorageService implements StorageService {
+public class FailoverStorageServiceImpl implements StorageService {
     private final MinIOStorageService minIOStorageService;
     private final SeaweedsStorageService seaweedsStorageService;
     @Override

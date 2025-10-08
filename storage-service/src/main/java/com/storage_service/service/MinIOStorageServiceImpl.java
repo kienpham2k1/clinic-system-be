@@ -1,16 +1,15 @@
 package com.storage_service.service;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
@@ -20,10 +19,16 @@ import java.time.Duration;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class MinIOStorageServiceImpl implements MinIOStorageService {
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
+
+    public MinIOStorageServiceImpl(
+            @Qualifier("minIOClient") S3Client s3Client,
+            S3Presigner s3Presigner) {
+        this.s3Client = s3Client;
+        this.s3Presigner = s3Presigner;
+    }
 
     @Value("${minio.bucket}")
     private String bucketName;
@@ -31,7 +36,17 @@ public class MinIOStorageServiceImpl implements MinIOStorageService {
     @Value("${minio.public-url}")
     private String publicUrl;
 
+    public void createBucketIfNotExists() {
+        boolean exists = s3Client.listBuckets().buckets()
+                .stream()
+                .anyMatch(b -> b.name().equals(bucketName));
+        if (!exists) {
+            s3Client.createBucket(CreateBucketRequest.builder().bucket(bucketName).build());
+        }
+    }
+
     public String uploadFile(MultipartFile file) throws IOException {
+        createBucketIfNotExists();
         String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
