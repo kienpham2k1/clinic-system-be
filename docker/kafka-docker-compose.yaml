@@ -3,6 +3,7 @@ version: '3.8'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.1
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
     ports:
@@ -11,6 +12,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.2.1
+    container_name: kafka
     ports:
       - "9092:9092"
     environment:
