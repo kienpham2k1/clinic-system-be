@@ -9,9 +9,10 @@ minio:
   secret-key: minioadmin
   bucket: clinic-files
   public-url: http://localhost:9000
-seaweeds:
-  endpoint: http://0.0.0.0:8333
-  access-key: any
-  secret-key: any
-  bucket: clinic-files
-  public-url: http://localhost:9000
+seaweed:
+  s3:
+    endpoint: http://localhost:8333
+    access-key: admin
+    secret-key: admin123
+    bucket: my-bucket
+

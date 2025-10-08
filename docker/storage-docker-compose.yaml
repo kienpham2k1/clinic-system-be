@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3"
 
 services:
   minio:
@@ -14,65 +14,56 @@ services:
       - minio_data:/data
     command: server /data --console-address ":9090"
     restart: unless-stopped
-#
-#  master:
-#    image: chrislusf/seaweedfs:latest
-#    container_name: weed-master
-#    command: "master -ip=master -port=9333"
-#    ports:
-#      - "9333:9333"   # master web UI + API
-#      - "19333:19333" # master gRPC
-#    restart: unless-stopped
-#    networks:
-#      - seaweednet
-#
-#  volume:
-#    image: chrislusf/seaweedfs:latest
-#    container_name: weed-volume
-#    command: "volume -mserver=master:9333 -ip=volume -port=8080 -publicUrl=volume:8080 -dir=/data -max=30"
-#    volumes:
-#      - ./data:/data
-#    ports:
-#      - "8080:8080"     # volume server REST API
-#      - "18080:18080"   # volume gRPC
-#    restart: unless-stopped
-#    depends_on:
-#      - master
-#    networks:
-#      - seaweednet
-#
-#  filer:
-#    image: chrislusf/seaweedfs:latest
-#    container_name: weed-filer
-#    command: "filer -master=master:9333 -ip=filer -port=8888"
-#    ports:
-#      - "8888:8888"   # filer REST API
-#      - "18888:18888" # filer gRPC
-#    restart: unless-stopped
-#    depends_on:
-#      - master
-#      - volume
-#    networks:
-#      - seaweednet
-#
-#  s3:
-#    image: chrislusf/seaweedfs:latest
-#    container_name: weed-s3
-#    command: "s3 -port=8333 -filer=filer:8888   -config=/etc/seaweedfs/config.json"
-#    volumes:
-#      - ./config/s3/config.json:/etc/seaweedfs/config.json
-#    restart: unless-stopped
-#    ports:
-#      - "8333:8333"
-#    depends_on:
-#      - filer
-#    networks:
-#      - seaweednet
-#
-#
-#networks:
-#  seaweednet:
-#    driver: bridge
+
+  master:
+    container_name: master
+    image: chrislusf/seaweedfs
+    command: "master -ip=master -ip.bind=master -port=9333"
+    ports:
+      - "9333:9333"
+    networks:
+      - seaweed_net
+
+  volume:
+    image: chrislusf/seaweedfs
+    container_name: volume
+    command: "volume -mserver=master:9333 -port=8080 -ip=volume -ip.bind=volume"
+    depends_on:
+      - master
+    ports:
+      - "8080:8080"
+    networks:
+      - seaweed_net
+
+  filer:
+    image: chrislusf/seaweedfs
+    container_name: filer
+    command: "filer -master=master:9333 -ip.bind=filer"
+    depends_on:
+      - master
+      - volume
+    ports:
+      - "8888:8888"
+    networks:
+      - seaweed_net
+
+  s3:
+    image: chrislusf/seaweedfs
+    container_name: s3
+    command: "s3 -filer=filer:8888 -ip.bind=s3 -port=8333"
+    depends_on:
+      - filer
+    ports:
+      - "8333:8333"
+    environment:
+      - AWS_ACCESS_KEY_ID=admin
+      - AWS_SECRET_ACCESS_KEY=admin123
+    networks:
+      - seaweed_net
+
+networks:
+  seaweed_net:
+    driver: bridge
 
 volumes:
   minio_data:
