@@ -1,0 +1,82 @@
+server:
+  port: ${PORT:8094}
+
+spring:
+  messages:
+    encoding: UTF-8
+  application:
+    name: notification-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/clinic_patient}
+    username: ${SPRING_DATASOURCE_USERNAME:clinic}
+    password: ${SPRING_DATASOURCE_PASSWORD:clinic123}
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_ENDPOINT:localhost:9092}
+    listener:
+      ack-mode: manual
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+app:
+  kafka:
+    retry:
+      max-attempts: 4   # tổng số lần (including first attempt)
+      initial-interval-ms: 1000
+      multiplier: 2.0
+      max-interval-ms: 10000
+    notification:
+      topic: notification
+      group: notification-groups
+      topic.dlt: notification.dlt
+      group.dlt: notification-groups.dlt
+    outbox:
+      poll-ms: 5000 #ms
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

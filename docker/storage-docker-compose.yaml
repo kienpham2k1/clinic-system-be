@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"  # S3 API
+      - "9090:9090"  # MinIO Console (UI)
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9090"
+    restart: unless-stopped
+
+  master:
+    container_name: master
+    image: chrislusf/seaweedfs
+    command: "master -ip=master -ip.bind=master -port=9333"
+    ports:
+      - "9333:9333"
+    networks:
+      - seaweed_net
+
+  volume:
+    image: chrislusf/seaweedfs
+    container_name: volume
+    command: "volume -mserver=master:9333 -port=8080 -ip=volume -ip.bind=volume"
+    depends_on:
+      - master
+    ports:
+      - "8080:8080"
+    networks:
+      - seaweed_net
+
+  filer:
+    image: chrislusf/seaweedfs
+    container_name: filer
+    command: "filer -master=master:9333 -ip.bind=filer"
+    depends_on:
+      - master
+      - volume
+    ports:
+      - "8888:8888"
+    networks:
+      - seaweed_net
+
+  s3:
+    image: chrislusf/seaweedfs
+    container_name: s3
+    command: "s3 -filer=filer:8888 -ip.bind=s3 -port=8333"
+    depends_on:
+      - filer
+    ports:
+      - "8333:8333"
+    environment:
+      - AWS_ACCESS_KEY_ID=admin
+      - AWS_SECRET_ACCESS_KEY=admin123
+    networks:
+      - seaweed_net
+
+networks:
+  seaweed_net:
+    driver: bridge
+
+volumes:
+  minio_data:

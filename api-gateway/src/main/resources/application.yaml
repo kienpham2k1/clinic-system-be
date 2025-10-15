@@ -5,6 +5,8 @@ server:
 spring:
   application:
     name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:8888
 
   cloud:
     gateway:
@@ -33,8 +35,8 @@ spring:
               filters:
                 - name: JwtAuth
                   args:
-                    GET: [ ADMIN ]
-                    POST: [ ADMIN ]
+                    ROLE: [ PATIENT , DOCTOR ]
+                    GET: [ ADMIN_READ ]
                 - name: RequestRateLimiter
                   args:
                     redis-rate-limiter:

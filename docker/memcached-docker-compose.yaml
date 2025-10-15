@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis-api-gateway
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  memcached:
+    image: memcached:1.6-alpine
+    container_name: clinic-memcached
+    ports:
+      - "11211:11211"
+    restart: unless-stopped
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redis-insight
+    ports:
+      - "5540:5540"
+    restart: unless-stopped
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin-gateway
+    ports:
+      - "9411:9411"
+    restart: unless-stopped
+volumes:
+  redis-data:

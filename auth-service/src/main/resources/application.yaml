@@ -2,8 +2,24 @@ server:
   port: ${PORT:8090}
 
 spring:
+  messages:
+    encoding: UTF-8
   application:
     name: auth-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/clinic_patient}
+    username: ${SPRING_DATASOURCE_USERNAME:clinic}
+    password: ${SPRING_DATASOURCE_PASSWORD:clinic123}
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  config:
+    import: optional:configserver:http://localhost:8888
 eureka:
   client:
     service-url:
@@ -11,17 +27,31 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
-jwt:
-  private:
-    expiration: 86400000
-    private-key-path: keys/private.pem
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 logging:
   level:
     org:
       springframework:
         web: debug
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

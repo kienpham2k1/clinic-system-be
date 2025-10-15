@@ -1,2 +1,4 @@
 ### Log files
 *.log
+/.idea/
+/docker/data/*
